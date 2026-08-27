@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لیگ اختصاصی فوتبال</title>
+    <title>لیگ مجازی کلاسیک</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -72,15 +72,16 @@
             border: none;
         }
 
+        /* رنگ دکمه ثبت نام/ورود به طلایی تغییر یافت */
         .btn-auth {
-            background-color: var(--primary-green);
+            background-color: var(--accent-gold);
             color: #000;
-            box-shadow: 0 0 15px rgba(0, 255, 135, 0.3);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
         }
 
         .btn-auth:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(0, 255, 135, 0.5);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
         }
 
         .header-center {
@@ -93,10 +94,12 @@
             gap: 12px;
         }
 
-        .logo-icon {
-            font-size: 2rem;
-            color: var(--primary-green);
-            filter: drop-shadow(0 0 10px var(--primary-green));
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 8px;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
         }
 
         .league-title {
@@ -380,8 +383,9 @@
 
         <div class="header-center">
             <div class="logo-container">
-                <i class="fa-solid fa-trophy logo-icon"></i>
-                <span class="league-title">لیگ برتر قهرمانان</span>
+                <!-- آیکون تصویر از root گیت هاب جایگزین شد -->
+                <img src="./IMG_20260827_235858_798.jpg" alt="لوگو" class="logo-img">
+                <span class="league-title">لیگ مجازی کلاسیک</span>
             </div>
         </div>
     </header>
@@ -499,4 +503,3 @@
 
 </body>
 </html>
- 
