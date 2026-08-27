@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لیگ اختصاصی فوتبال</title>
-    <!-- فونت Vazirmatn و آیکون‌های FontAwesome -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -36,12 +35,12 @@
             background-color: var(--bg-main);
             color: var(--text-white);
             min-height: 100vh;
-            padding-bottom: 100px; /* برای جلوگیری از پوشانده شدن content توسط دکمه‌های شناور */
+            padding-bottom: 100px;
             overflow-x: hidden;
         }
 
         /* ==========================================
-           2. هدر (Header)
+           2. هدر (Header) - شناور نیست
            ========================================== */
         header {
             display: flex;
@@ -49,9 +48,7 @@
             align-items: center;
             padding: 20px 5%;
             background: rgba(11, 14, 20, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
+            position: relative; /* حذف sticky جهت شناور نبودن */
             z-index: 100;
             border-bottom: 1px solid var(--border-color);
         }
@@ -75,26 +72,15 @@
             border: none;
         }
 
-        .btn-register {
+        .btn-auth {
             background-color: var(--primary-green);
             color: #000;
             box-shadow: 0 0 15px rgba(0, 255, 135, 0.3);
         }
 
-        .btn-register:hover {
+        .btn-auth:hover {
             transform: translateY(-2px);
             box-shadow: 0 0 25px rgba(0, 255, 135, 0.5);
-        }
-
-        .btn-login {
-            background: transparent;
-            color: var(--text-white);
-            border: 2px solid var(--border-color);
-        }
-
-        .btn-login:hover {
-            border-color: var(--text-white);
-            background: rgba(255, 255, 255, 0.05);
         }
 
         .header-center {
@@ -123,10 +109,10 @@
         }
 
         /* ==========================================
-           3. کادر افتخارات (Trophy Banner)
+           3. کادر افتخارات (Trophy Banner) - پهن و کشیده
            ========================================== */
         .container {
-            max-width: 1000px;
+            max-width: 1200px; /* افزایش پهنای کانتینر اصلی */
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -136,11 +122,12 @@
             background: linear-gradient(135deg, rgba(22, 27, 38, 0.9) 0%, rgba(31, 38, 55, 0.5) 100%);
             border: 1px solid rgba(255, 215, 0, 0.2);
             border-radius: 20px;
-            padding: 30px;
+            padding: 40px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            width: 100%;
         }
 
         .trophy-section::before {
@@ -158,54 +145,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             color: var(--accent-gold);
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            margin-bottom: 25px;
-        }
-
-        .trophy-grid {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .trophy-card {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            flex: 1;
-            min-width: 200px;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease;
-        }
-
-        .trophy-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .trophy-card.rank-1 {
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
-        }
-
-        .trophy-rank {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 5px;
-        }
-
-        .rank-1 .trophy-rank { color: var(--accent-gold); }
-        .rank-2 .trophy-rank { color: #c0c0c0; }
-        .rank-3 .trophy-rank { color: #cd7f32; }
-
-        .trophy-team-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-top: 10px;
+            margin: 0;
         }
 
         /* ==========================================
@@ -355,7 +299,6 @@
             transform: translateY(-5px) scale(1.05);
         }
 
-        /* دکمه پایین سمت راست - خرید گل */
         .btn-buy-goal {
             right: 30px;
             background: linear-gradient(45deg, #ff9f00, #ffd700);
@@ -369,7 +312,6 @@
             100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
         }
 
-        /* دکمه پایین سمت چپ - اخبار */
         .btn-news {
             left: 30px;
             background-color: var(--bg-card);
@@ -412,7 +354,7 @@
 
             .stat-item:nth-child(2), 
             .stat-item:nth-child(3) {
-                display: none; /* مخفی کردن برد/باخت در موبایل برای خلوت شدن */
+                display: none;
             }
 
             .floating-btn {
@@ -428,16 +370,11 @@
 </head>
 <body>
 
-    <!-- هدر سایت -->
     <header>
         <div class="auth-buttons">
-            <button class="btn btn-register">
-                <i class="fa-solid fa-user-plus"></i>
-                ثبت نام
-            </button>
-            <button class="btn btn-login">
+            <button class="btn btn-auth">
                 <i class="fa-solid fa-right-to-bracket"></i>
-                ورود
+                ورود/ثبت نام
             </button>
         </div>
 
@@ -451,42 +388,16 @@
 
     <div class="container">
         
-        <!-- کادر افتخارات -->
         <section class="trophy-section">
             <div class="trophy-header">
                 <i class="fa-solid fa-crown"></i>
-                <span>تالار افتخارات فصل جاری</span>
-            </div>
-            
-            <div class="trophy-grid">
-                <!-- رتبه 2 -->
-                <div class="trophy-card rank-2">
-                    <i class="fa-solid fa-medal" style="font-size: 2rem; color: #c0c0c0;"></i>
-                    <div class="trophy-rank">2</div>
-                    <div class="trophy-team-name">توفان تهران</div>
-                </div>
-
-                <!-- رتبه 1 -->
-                <div class="trophy-card rank-1">
-                    <i class="fa-solid fa-trophy" style="font-size: 3rem; color: var(--accent-gold);"></i>
-                    <div class="trophy-rank">1</div>
-                    <div class="trophy-team-name">ستاره‌های کویر</div>
-                </div>
-
-                <!-- رتبه 3 -->
-                <div class="trophy-card rank-3">
-                    <i class="fa-solid fa-medal" style="font-size: 2rem; color: #cd7f32;"></i>
-                    <div class="trophy-rank">3</div>
-                    <div class="trophy-team-name">عقاب‌های شمال</div>
-                </div>
+                <span>تالار افتخارات</span>
             </div>
         </section>
 
-        <!-- لیست تیم‌ها -->
         <section class="teams-section">
             <div class="section-title">جدول رده‌بندی تیم‌ها</div>
 
-            <!-- تیم ۱ -->
             <div class="team-row top-3">
                 <div class="team-info">
                     <span class="team-rank">۰۱</span>
@@ -501,7 +412,6 @@
                 </div>
             </div>
 
-            <!-- تیم ۲ -->
             <div class="team-row top-3">
                 <div class="team-info">
                     <span class="team-rank">۰۲</span>
@@ -516,7 +426,6 @@
                 </div>
             </div>
 
-            <!-- تیم ۳ -->
             <div class="team-row top-3">
                 <div class="team-info">
                     <span class="team-rank">۰۳</span>
@@ -531,7 +440,6 @@
                 </div>
             </div>
 
-            <!-- تیم ۴ -->
             <div class="team-row">
                 <div class="team-info">
                     <span class="team-rank">۰۴</span>
@@ -546,7 +454,6 @@
                 </div>
             </div>
 
-            <!-- تیم ۵ -->
             <div class="team-row">
                 <div class="team-info">
                     <span class="team-rank">۰۵</span>
@@ -561,7 +468,6 @@
                 </div>
             </div>
 
-            <!-- تیم ۶ -->
             <div class="team-row">
                 <div class="team-info">
                     <span class="team-rank">۰۶</span>
@@ -580,15 +486,11 @@
 
     </div>
 
-    <!-- دکمه‌های شناور -->
-    
-    <!-- دکمه خرید گل (پایین سمت راست) -->
     <a href="#" class="floating-btn btn-buy-goal">
         <i class="fa-solid fa-futbol" style="font-size: 1.2rem;"></i>
         <span>خرید گل</span>
     </a>
 
-    <!-- دکمه اخبار (پایین سمت چپ) -->
     <a href="#" class="floating-btn btn-news">
         <div class="news-badge">۳</div>
         <i class="fa-solid fa-newspaper" style="font-size: 1.1rem;"></i>
@@ -597,3 +499,4 @@
 
 </body>
 </html>
+ 
