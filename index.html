@@ -8,15 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* ==========================================
-           1. تنظیمات پایه و متغیرهای رنگی
-           ========================================== */
         :root {
             --bg-main: #0b0e14;
             --bg-card: #161b26;
             --bg-card-hover: #1f2637;
             --primary-green: #00ff87;
             --accent-gold: #ffd700;
+            --accent-silver: #c0c0c0;
+            --accent-bronze: #cd7f32;
             --accent-blue: #00b4d8;
             --text-white: #ffffff;
             --text-muted: #94a3b8;
@@ -35,28 +34,22 @@
             background-color: var(--bg-main);
             color: var(--text-white);
             min-height: 100vh;
-            padding-bottom: 100px;
+            padding-bottom: 120px;
             overflow-x: hidden;
         }
 
-        /* ==========================================
-           2. هدر (Header) - شناور نیست
-           ========================================== */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 5%;
             background: rgba(11, 14, 20, 0.8);
-            position: relative; /* حذف sticky جهت شناور نبودن */
+            position: relative;
             z-index: 100;
             border-bottom: 1px solid var(--border-color);
         }
 
-        .auth-buttons {
-            display: flex;
-            gap: 12px;
-        }
+        .auth-buttons { display: flex; gap: 12px; }
 
         .btn {
             padding: 10px 22px;
@@ -72,7 +65,6 @@
             border: none;
         }
 
-        /* رنگ دکمه ثبت نام/ورود به طلایی تغییر یافت */
         .btn-auth {
             background-color: var(--accent-gold);
             color: #000;
@@ -84,16 +76,8 @@
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
         }
 
-        .header-center {
-            text-align: center;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .header-center { text-align: center; }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
         .logo-img {
             width: 40px;
             height: 40px;
@@ -105,44 +89,30 @@
         .league-title {
             font-size: 1.4rem;
             font-weight: 900;
-            letter-spacing: -0.5px;
             background: linear-gradient(45deg, #fff, var(--text-muted));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* ==========================================
-           3. کادر افتخارات (Trophy Banner) - پهن و کشیده
-           ========================================== */
         .container {
-            max-width: 1200px; /* افزایش پهنای کانتینر اصلی */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
+        /* تالار افتخارات */
         .trophy-section {
             margin: 30px 0;
             background: linear-gradient(135deg, rgba(22, 27, 38, 0.9) 0%, rgba(31, 38, 55, 0.5) 100%);
             border: 1px solid rgba(255, 215, 0, 0.2);
             border-radius: 20px;
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            cursor: pointer;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            width: 100%;
+            transition: transform 0.3s;
         }
-
-        .trophy-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,215,0,0.05) 0%, transparent 60%);
-            pointer-events: none;
-        }
+        .trophy-section:hover { transform: scale(1.01); }
 
         .trophy-header {
             display: flex;
@@ -152,26 +122,18 @@
             color: var(--accent-gold);
             font-size: 1.8rem;
             font-weight: 800;
-            margin: 0;
         }
 
-        /* ==========================================
-           4. لیست تیم‌ها (Teams Table / List)
-           ========================================== */
-        .teams-section {
-            margin-top: 40px;
-        }
-
+        /* عناوین بخش‌ها */
         .section-title {
             font-size: 1.2rem;
             font-weight: 800;
-            margin-bottom: 20px;
+            margin: 40px 0 20px 0;
             display: flex;
             align-items: center;
             gap: 10px;
             color: var(--text-white);
         }
-
         .section-title::before {
             content: '';
             width: 4px;
@@ -180,6 +142,7 @@
             border-radius: 2px;
         }
 
+        /* جدول رده بندی */
         .team-row {
             display: flex;
             align-items: center;
@@ -189,103 +152,57 @@
             border-radius: 12px;
             padding: 16px 24px;
             margin-bottom: 12px;
-            transition: all 0.25s ease;
-            position: relative;
-            overflow: hidden;
         }
+        .team-info { display: flex; align-items: center; gap: 20px; flex: 2; }
+        .team-rank { font-size: 1.2rem; font-weight: 900; color: var(--text-muted); width: 30px; }
+        .team-name { font-weight: 700; font-size: 1.05rem; }
+        .team-stats { display: flex; gap: 25px; flex: 1; justify-content: flex-end; }
+        .stat-item { text-align: center; }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); display: block; }
+        .stat-value { font-weight: 700; font-size: 0.95rem; }
+        .stat-value.pts { color: var(--primary-green); font-size: 1.1rem; }
 
-        .team-row:hover {
-            background-color: var(--bg-card-hover);
-            transform: scale(1.01);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .team-row::before {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 0;
-            height: 100%;
-            width: 4px;
-            background-color: transparent;
-            transition: 0.3s;
-        }
-
-        .team-row:hover::before {
-            background-color: var(--primary-green);
-        }
-
-        .team-info {
+        /* بخش جدید: بازی‌ها */
+        .match-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 20px;
-            flex: 2;
         }
-
-        .team-rank {
-            font-size: 1.2rem;
+        .match-team { font-weight: 700; font-size: 1rem; width: 40%; }
+        .match-team.left { text-align: left; }
+        .match-score {
+            background: rgba(0, 255, 135, 0.1);
+            color: var(--primary-green);
+            padding: 6px 16px;
+            border-radius: 20px;
             font-weight: 900;
-            color: var(--text-muted);
-            width: 30px;
-        }
-
-        .top-3 .team-rank {
-            color: var(--primary-green);
-        }
-
-        .team-logo {
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: var(--text-white);
-        }
-
-        .team-name {
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-
-        .team-stats {
-            display: flex;
-            gap: 25px;
-            flex: 1;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        .stat-value {
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        .stat-value.pts {
-            color: var(--primary-green);
             font-size: 1.1rem;
         }
 
-        /* ==========================================
-           5. دکمه‌های شناور (Floating Buttons)
-           ========================================== */
+        /* بخش جدید: آقای گل */
+        .scorer-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .scorer-info { display: flex; align-items: center; gap: 15px; }
+        .scorer-rank { font-weight: 900; color: var(--accent-gold); font-size: 1.1rem; }
+
+        /* دکمه‌های شناور */
         .floating-btn {
             position: fixed;
             bottom: 30px;
-            z-index: 999;
+            z-index: 99;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -296,25 +213,13 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
+            border: none;
         }
-
-        .floating-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-        }
-
         .btn-buy-goal {
             right: 30px;
             background: linear-gradient(45deg, #ff9f00, #ffd700);
             color: #000;
-            animation: pulse-animation 2s infinite;
         }
-
-        @keyframes pulse-animation {
-            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
-        }
-
         .btn-news {
             left: 30px;
             background-color: var(--bg-card);
@@ -322,50 +227,111 @@
             border: 1px solid var(--accent-blue);
         }
 
-        .btn-news i {
-            color: var(--accent-blue);
-        }
-
-        .news-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: #ff3b30;
-            color: #fff;
-            font-size: 0.7rem;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--bg-main);
-        }
-
         /* ==========================================
-           6. طراحی ریسپانسیو (Responsive)
+           پاپ‌آپ‌ها (Modals - 90% صفحه)
            ========================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            width: 90vw;
+            height: 90vh;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .modal-title { font-size: 1.2rem; font-weight: 800; color: var(--accent-gold); }
+        .modal-close {
+            background: none; border: none;
+            color: var(--text-muted); font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding-left: 5px;
+        }
+
+        /* شبکه کارت‌های خرید گل (۲ ستونه) */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .product-card:hover { transform: scale(1.03); border-color: var(--accent-gold); }
+        .product-name { font-weight: 800; font-size: 1rem; margin-bottom: 8px; }
+        .product-price { color: var(--primary-green); font-weight: 700; font-size: 0.9rem; }
+
+        /* آیتم‌های افتخارات */
+        .honor-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .medals-container { display: flex; gap: 15px; }
+        .medal-item { display: flex; align-items: center; gap: 4px; font-weight: 700; }
+
+        /* آیتم‌های اخبار */
+        .news-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+        .news-title { font-size: 1.15rem; font-weight: 800; color: var(--accent-blue); margin-bottom: 8px; }
+        .news-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+
         @media (max-width: 768px) {
-            header {
-                flex-direction: column-reverse;
-                gap: 15px;
-            }
-
-            .team-stats {
-                gap: 12px;
-            }
-
-            .stat-item:nth-child(2), 
-            .stat-item:nth-child(3) {
-                display: none;
-            }
-
-            .floating-btn {
-                padding: 12px 18px;
-                font-size: 0.85rem;
-                bottom: 20px;
-            }
-
+            .team-stats { gap: 10px; }
+            .floating-btn { padding: 12px 18px; font-size: 0.85rem; bottom: 20px; }
             .btn-buy-goal { right: 15px; }
             .btn-news { left: 15px; }
         }
@@ -380,10 +346,8 @@
                 ورود/ثبت نام
             </button>
         </div>
-
         <div class="header-center">
             <div class="logo-container">
-                <!-- آیکون تصویر از root گیت هاب جایگزین شد -->
                 <img src="./IMG_20260827_235858_798.jpg" alt="لوگو" class="logo-img">
                 <span class="league-title">لیگ مجازی کلاسیک</span>
             </div>
@@ -392,114 +356,209 @@
 
     <div class="container">
         
-        <section class="trophy-section">
+        <!-- تالار افتخارات -->
+        <section class="trophy-section" onclick="openModal('honorsModal')">
             <div class="trophy-header">
                 <i class="fa-solid fa-crown"></i>
                 <span>تالار افتخارات</span>
             </div>
         </section>
 
+        <!-- جدول رده‌بندی -->
         <section class="teams-section">
             <div class="section-title">جدول رده‌بندی تیم‌ها</div>
+            <div id="teamsContainer">در حال دریافت اطلاعات...</div>
+        </section>
 
-            <div class="team-row top-3">
-                <div class="team-info">
-                    <span class="team-rank">۰۱</span>
-                    <div class="team-logo"><i class="fa-solid fa-shield-halved" style="color: #ffd700;"></i></div>
-                    <span class="team-name">ستاره‌های کویر</span>
-                </div>
-                <div class="team-stats">
-                    <div class="stat-item"><span class="stat-label">بازی</span><span class="stat-value">۱۰</span></div>
-                    <div class="stat-item"><span class="stat-label">برد</span><span class="stat-value">۸</span></div>
-                    <div class="stat-item"><span class="stat-label">باخت</span><span class="stat-value">۱</span></div>
-                    <div class="stat-item"><span class="stat-label">امتیاز</span><span class="stat-value pts">۲۵</span></div>
-                </div>
-            </div>
+        <!-- نتایج بازی‌ها -->
+        <section class="matches-section">
+            <div class="section-title">🏆🔥 نتایج رسمی | جام باشگاه‌های جهان کلاسیک ⚽🌍</div>
+            <div id="matchesContainer">در حال دریافت اطلاعات...</div>
+        </section>
 
-            <div class="team-row top-3">
-                <div class="team-info">
-                    <span class="team-rank">۰۲</span>
-                    <div class="team-logo"><i class="fa-solid fa-shield-cat" style="color: #c0c0c0;"></i></div>
-                    <span class="team-name">توفان تهران</span>
-                </div>
-                <div class="team-stats">
-                    <div class="stat-item"><span class="stat-label">بازی</span><span class="stat-value">۱۰</span></div>
-                    <div class="stat-item"><span class="stat-label">برد</span><span class="stat-value">۷</span></div>
-                    <div class="stat-item"><span class="stat-label">باخت</span><span class="stat-value">۲</span></div>
-                    <div class="stat-item"><span class="stat-label">امتیاز</span><span class="stat-value pts">۲۲</span></div>
-                </div>
-            </div>
-
-            <div class="team-row top-3">
-                <div class="team-info">
-                    <span class="team-rank">۰۳</span>
-                    <div class="team-logo"><i class="fa-solid fa-shield-dog" style="color: #cd7f32;"></i></div>
-                    <span class="team-name">عقاب‌های شمال</span>
-                </div>
-                <div class="team-stats">
-                    <div class="stat-item"><span class="stat-label">بازی</span><span class="stat-value">۱۰</span></div>
-                    <div class="stat-item"><span class="stat-label">برد</span><span class="stat-value">۶</span></div>
-                    <div class="stat-item"><span class="stat-label">باخت</span><span class="stat-value">۳</span></div>
-                    <div class="stat-item"><span class="stat-label">امتیاز</span><span class="stat-value pts">۱۹</span></div>
-                </div>
-            </div>
-
-            <div class="team-row">
-                <div class="team-info">
-                    <span class="team-rank">۰۴</span>
-                    <div class="team-logo"><i class="fa-solid fa-shield"></i></div>
-                    <span class="team-name">شاهین تبریز</span>
-                </div>
-                <div class="team-stats">
-                    <div class="stat-item"><span class="stat-label">بازی</span><span class="stat-value">۱۰</span></div>
-                    <div class="stat-item"><span class="stat-label">برد</span><span class="stat-value">۴</span></div>
-                    <div class="stat-item"><span class="stat-label">باخت</span><span class="stat-value">۴</span></div>
-                    <div class="stat-item"><span class="stat-label">امتیاز</span><span class="stat-value pts">۱۴</span></div>
-                </div>
-            </div>
-
-            <div class="team-row">
-                <div class="team-info">
-                    <span class="team-rank">۰۵</span>
-                    <div class="team-logo"><i class="fa-solid fa-shield"></i></div>
-                    <span class="team-name">فولاد زاگرس</span>
-                </div>
-                <div class="team-stats">
-                    <div class="stat-item"><span class="stat-label">بازی</span><span class="stat-value">۱۰</span></div>
-                    <div class="stat-item"><span class="stat-label">برد</span><span class="stat-value">۳</span></div>
-                    <div class="stat-item"><span class="stat-label">باخت</span><span class="stat-value">۵</span></div>
-                    <div class="stat-item"><span class="stat-label">امتیاز</span><span class="stat-value pts">۱۱</span></div>
-                </div>
-            </div>
-
-            <div class="team-row">
-                <div class="team-info">
-                    <span class="team-rank">۰۶</span>
-                    <div class="team-logo"><i class="fa-solid fa-shield"></i></div>
-                    <span class="team-name">موج خلیج فارس</span>
-                </div>
-                <div class="team-stats">
-                    <div class="stat-item"><span class="stat-label">بازی</span><span class="stat-value">۱۰</span></div>
-                    <div class="stat-item"><span class="stat-label">برد</span><span class="stat-value">۱</span></div>
-                    <div class="stat-item"><span class="stat-label">باخت</span><span class="stat-value">۸</span></div>
-                    <div class="stat-item"><span class="stat-label">امتیاز</span><span class="stat-value pts">۵</span></div>
-                </div>
-            </div>
-
+        <!-- آقای گل -->
+        <section class="top-scorers-section">
+            <div class="section-title">🏆🔥 نتایج رسمی | جام باشگاه‌های جهان کلاسیک ⚽🌍</div>
+            <div id="topScorersContainer">در حال دریافت اطلاعات...</div>
         </section>
 
     </div>
 
-    <a href="#" class="floating-btn btn-buy-goal">
+    <!-- دکمه‌های شناور -->
+    <button class="floating-btn btn-buy-goal" onclick="openModal('productsModal')">
         <i class="fa-solid fa-futbol" style="font-size: 1.2rem;"></i>
         <span>خرید گل</span>
-    </a>
+    </button>
 
-    <a href="#" class="floating-btn btn-news">
-        <div class="news-badge">۳</div>
+    <button class="floating-btn btn-news" onclick="openModal('newsModal')">
         <i class="fa-solid fa-newspaper" style="font-size: 1.1rem;"></i>
         <span>اخبار لیگ</span>
-    </a>
+    </button>
 
+    <!-- 1. پاپ‌آپ تالار افتخارات -->
+    <div class="modal-overlay" id="honorsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">لیست مربی هایی که در لیگ افتخار به دست آوردن ⭕️</div>
+                <button class="modal-close" onclick="closeModal('honorsModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="honorsList">در حال بارگذاری...</div>
+        </div>
+    </div>
+
+    <!-- 2. پاپ‌آپ خرید گل -->
+    <div class="modal-overlay" id="productsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">فروشگاه / خرید گل</div>
+                <button class="modal-close" onclick="closeModal('productsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="products-grid" id="productsList">در حال بارگذاری...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. پاپ‌آپ اخبار لیگ -->
+    <div class="modal-overlay" id="newsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">اخبار لیگ</div>
+                <button class="modal-close" onclick="closeModal('newsModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="newsList">در حال بارگذاری...</div>
+        </div>
+    </div>
+
+    <script>
+        // مدیریت پاپ‌آپ‌ها
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        // تبدیل شیء فایربیس به آرایه
+        function toArray(data) {
+            if (!data) return [];
+            return Object.keys(data).map(key => ({ id: key, ...data[key] }));
+        }
+
+        // دریافت کلیه اطلاعات از API ورسل
+        async function fetchAppData() {
+            try {
+                const response = await fetch('/api/getdata');
+                const data = await response.json();
+
+                renderTeams(toArray(data.teams));
+                renderMatches(toArray(data.matches));
+                renderTopScorers(toArray(data.topScorers));
+                renderHonors(toArray(data.honors));
+                renderProducts(toArray(data.products));
+                renderNews(toArray(data.news));
+            } catch (err) {
+                console.error("خطا در دریافت اطلاعات:", err);
+            }
+        }
+
+        // ۱. رندر جدول تیم‌ها (سورت بر اساس امتیاز)
+        function renderTeams(teams) {
+            teams.sort((a, b) => (Number(b.points) || 0) - (Number(a.points) || 0));
+            const container = document.getElementById('teamsContainer');
+            
+            if (teams.length === 0) { container.innerHTML = '<p>داده‌ای ثبت نشده است.</p>'; return; }
+
+            container.innerHTML = teams.map((team, index) => `
+                <div class="team-row">
+                    <div class="team-info">
+                        <span class="team-rank">${String(index + 1).padStart(2, '۰')}</span>
+                        <div class="team-logo"><i class="fa-solid fa-shield"></i></div>
+                        <span class="team-name">${team.name || '-'}</span>
+                    </div>
+                    <div class="team-stats">
+                        <div class="stat-item"><span class="stat-label">گل</span><span class="stat-value">${team.goals || 0}</span></div>
+                        <div class="stat-item"><span class="stat-label">امتیاز</span><span class="stat-value pts">${team.points || 0}</span></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ۲. رندر نتایج بازی‌ها
+        function renderMatches(matches) {
+            const container = document.getElementById('matchesContainer');
+            if (matches.length === 0) { container.innerHTML = '<p>بازی ثبت نشده است.</p>'; return; }
+
+            container.innerHTML = matches.map(m => `
+                <div class="match-card">
+                    <div class="match-team">${m.team1 || 'تیم ۱'}</div>
+                    <div class="match-score">${m.goals1 || 0} - ${m.goals2 || 0}</div>
+                    <div class="match-team left">${m.team2 || 'تیم ۲'}</div>
+                </div>
+            `).join('');
+        }
+
+        // ۳. رندر آقای گل
+        function renderTopScorers(scorers) {
+            const container = document.getElementById('topScorersContainer');
+            if (scorers.length === 0) { container.innerHTML = '<p>اطلاعات آقای گل موجود نیست.</p>'; return; }
+
+            container.innerHTML = scorers.map(s => `
+                <div class="scorer-card">
+                    <div class="scorer-info">
+                        <span class="scorer-rank">#${s.rank || '-'}</span>
+                        <div>
+                            <div style="font-weight: 800;">${s.player || '-'} (${s.flag || ''})</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">${s.team || '-'}</div>
+                        </div>
+                    </div>
+                    <div class="stat-value pts">${s.goals || 0} گل</div>
+                </div>
+            `).join('');
+        }
+
+        // ۴. رندر افتخارات (پاپ‌آپ)
+        function renderHonors(honors) {
+            const container = document.getElementById('honorsList');
+            if (honors.length === 0) { container.innerHTML = '<p>اطلاعاتی یافت نشد.</p>'; return; }
+
+            container.innerHTML = honors.map(h => `
+                <div class="honor-card">
+                    <div style="font-weight: 800;">${h.coach || 'نام مربی'}</div>
+                    <div class="medals-container">
+                        <div class="medal-item"><i class="fa-solid fa-medal" style="color: var(--accent-gold);"></i> ${h.gold || 0}</div>
+                        <div class="medal-item"><i class="fa-solid fa-medal" style="color: var(--accent-silver);"></i> ${h.silver || 0}</div>
+                        <div class="medal-item"><i class="fa-solid fa-medal" style="color: var(--accent-bronze);"></i> ${h.bronze || 0}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ۵. رندر محصولات (پاپ‌آپ)
+        function renderProducts(products) {
+            const container = document.getElementById('productsList');
+            if (products.length === 0) { container.innerHTML = '<p>محصولی یافت نشد.</p>'; return; }
+
+            container.innerHTML = products.map(p => `
+                <div class="product-card" onclick="alert('${p.desc || 'توضیحات ندارد'}')">
+                    <div class="product-name">${p.name || 'محصول'}</div>
+                    <div class="product-price">${p.price || 0} تومان</div>
+                </div>
+            `).join('');
+        }
+
+        // ۶. رندر اخبار (پاپ‌آپ)
+        function renderNews(news) {
+            const container = document.getElementById('newsList');
+            if (news.length === 0) { container.innerHTML = '<p>خبری یافت نشد.</p>'; return; }
+
+            container.innerHTML = news.map(n => `
+                <div class="news-card">
+                    <div class="news-title">${n.title || ''}</div>
+                    <div class="news-desc">${n.desc || ''}</div>
+                </div>
+            `).join('');
+        }
+
+        // بارگذاری دیتای اولیه
+        fetchAppData();
+    </script>
 </body>
 </html>
+ 
