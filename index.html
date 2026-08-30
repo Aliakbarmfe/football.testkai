@@ -49,6 +49,40 @@
             border-bottom: 1px solid var(--border-color);
         }
 
+        /* بخش جدید: شمارشگر بازدید در بالای سایت سمت راست */
+        .views-counter {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(22, 27, 38, 0.6);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            padding: 6px 14px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .eye-icon {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: var(--accent-gold);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
+        }
+
+        .views-count {
+            color: var(--accent-gold);
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
         .header-center { text-align: center; }
         .logo-container { display: flex; align-items: center; gap: 12px; }
         .logo-img {
@@ -482,6 +516,15 @@
 <body>
 
     <header>
+        <!-- بخش جدید: چشم طلایی و عدد بازدید سمت راست بالای سایت -->
+        <div class="views-counter">
+            <svg class="eye-icon" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span class="views-count" id="viewsCount">...</span>
+        </div>
+
         <div class="header-center">
             <div class="logo-container">
                 <img src="./IMG_20260827_235858_798.jpg" alt="لوگو" class="logo-img">
@@ -632,6 +675,19 @@
                 renderGames(toArray(data.games));
             } catch (err) {
                 console.error("خطا در دریافت اطلاعات:", err);
+            }
+        }
+
+        // تابع جدید: ثبت و به‌روزرسانی بازدید از طریق ورسل
+        async function updateViews() {
+            try {
+                const response = await fetch('/api/views', { method: 'POST' });
+                const data = await response.json();
+                if (data && data.views !== undefined) {
+                    document.getElementById('viewsCount').textContent = Number(data.views).toLocaleString('fa-IR');
+                }
+            } catch (err) {
+                console.error("خطا در به‌روزرسانی بازدید:", err);
             }
         }
 
@@ -823,8 +879,9 @@
             `).join('');
         }
 
-        // بارگذاری دیتای اولیه
+        // بارگذاری دیتای اولیه و به‌روزرسانی بازدیدها
         fetchAppData();
+        updateViews();
     </script>
 </body>
 </html>
