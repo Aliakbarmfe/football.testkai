@@ -49,8 +49,8 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* بخش جدید: شمارشگر بازدید در بالای سایت سمت راست */
-        .views-counter {
+        /* دکمه ارتباط با ما در بالای سایت سمت راست */
+        .contact-btn-header {
             position: absolute;
             right: 5%;
             top: 50%;
@@ -58,29 +58,20 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(22, 27, 38, 0.6);
-            border: 1px solid rgba(255, 215, 0, 0.25);
+            background: rgba(22, 27, 38, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.3);
             padding: 6px 14px;
             border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .eye-icon {
-            width: 20px;
-            height: 20px;
-            fill: none;
-            stroke: var(--accent-gold);
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.5));
-        }
-
-        .views-count {
             color: var(--accent-gold);
-            font-weight: 800;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .contact-btn-header:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent-gold);
         }
 
         .header-center { text-align: center; }
@@ -322,6 +313,17 @@
             border: 1px solid var(--primary-green);
         }
 
+        /* استایل فوتر پایینی */
+        .site-footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.8;
+        }
+
         /* ==========================================
            پاپ‌آپ‌ها (Modals - 90% صفحه)
            ========================================== */
@@ -362,7 +364,7 @@
             height: 95vh;
         }
 
-        /* استایل اختصاصی پاپ‌آپ کوچک جزئیات محصول */
+        /* استایل اختصاصی پاپ‌آپ کوچک جزئیات محصول و ارتباط با ما */
         .modal-content.modal-small {
             height: auto;
             max-height: 80vh;
@@ -386,6 +388,22 @@
             flex: 1;
             overflow-y: auto;
             padding-left: 5px;
+        }
+
+        /* استایل محتوای ارتباط با ما */
+        .contact-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            line-height: 1.8;
+            font-size: 0.92rem;
+            color: var(--text-white);
+        }
+        .contact-box h3 {
+            color: var(--accent-gold);
+            margin: 15px 0 10px 0;
+            font-size: 1.05rem;
         }
 
         .games-topic-banner {
@@ -516,14 +534,11 @@
 <body>
 
     <header>
-        <!-- بخش جدید: چشم طلایی و عدد بازدید سمت راست بالای سایت -->
-        <div class="views-counter">
-            <svg class="eye-icon" viewBox="0 0 24 24">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-            </svg>
-            <span class="views-count" id="viewsCount">...</span>
-        </div>
+        <!-- دکمه جدید ارتباط با ما سمت راست بالای سایت -->
+        <button class="contact-btn-header" onclick="openModal('contactModal')">
+            <i class="fa-solid fa-envelope"></i>
+            <span>ارتباط با ما</span>
+        </button>
 
         <div class="header-center">
             <div class="logo-container">
@@ -559,6 +574,12 @@
 
     </div>
 
+    <!-- متن اضافه شده در پایین سایت -->
+    <footer class="site-footer">
+        طراحی، توسعه و حمایت از این مجموعه با افتخار توسط «کیاکا» ⚡<br>
+        با عشق برای پیشرفت و ماندگاری لیگ مجازی کلاسیک ❤️⚽️
+    </footer>
+
     <button class="floating-btn btn-buy-goal" onclick="openModal('productsModal')">
         <i class="fa-solid fa-futbol" style="font-size: 1.2rem;"></i>
         <span>خرید گل</span>
@@ -573,6 +594,33 @@
         <i class="fa-solid fa-newspaper" style="font-size: 1.1rem;"></i>
         <span>اخبار لیگ</span>
     </button>
+
+    <!-- پاپ‌آپ جدید ارتباط با ما -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <div class="modal-title">📩 ارتباط با ما</div>
+                <button class="modal-close" onclick="closeModal('contactModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="contact-box">
+                    <p>برای هرگونه سؤال، پیشنهاد، انتقاد، همکاری یا گزارش مشکل، می‌توانید از طریق راه ارتباطی رسمی زیر با مجموعه لیگ مجازی کلاسیک در ارتباط باشید.</p>
+
+                    <h3>💬 پشتیبانی و پاسخگویی</h3>
+                    <p>برای پیگیری امور لیگ، ثبت درخواست‌ها، دریافت پشتیبانی و ارتباط مستقیم با مدیریت مجموعه، از طریق روبیکا با ما در ارتباط باشید.</p>
+                    <p style="margin-top: 10px;">
+                        👤 <strong>مدیریت و پشتیبانی:</strong> کیاكا<br>
+                        📱 <strong>روبیکا:</strong> <span style="color: var(--accent-blue); font-weight: 800;">@kiaka_1</span>
+                    </p>
+
+                    <p style="margin-top: 20px; text-align: center; font-weight: 700; color: var(--accent-gold);">
+                        از همراهی و حمایت شما از لیگ مجازی کلاسیک سپاسگزاریم. ❤️<br><br>
+                        League MajaZi Classic ⚽️📲
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal-overlay" id="gamesModal">
         <div class="modal-content modal-large">
@@ -678,14 +726,10 @@
             }
         }
 
-        // تابع جدید: ثبت و به‌روزرسانی بازدید از طریق ورسل
+        // ثبت و به‌روزرسانی بازدید در فایربیس (مخفیانه در پس‌زمینه)
         async function updateViews() {
             try {
-                const response = await fetch('/api/views', { method: 'POST' });
-                const data = await response.json();
-                if (data && data.views !== undefined) {
-                    document.getElementById('viewsCount').textContent = Number(data.views).toLocaleString('fa-IR');
-                }
+                await fetch('/api/views', { method: 'POST' });
             } catch (err) {
                 console.error("خطا در به‌روزرسانی بازدید:", err);
             }
@@ -879,7 +923,7 @@
             `).join('');
         }
 
-        // بارگذاری دیتای اولیه و به‌روزرسانی بازدیدها
+        // بارگذاری دیتای اولیه و ثبت بازدید در پس‌زمینه
         fetchAppData();
         updateViews();
     </script>
