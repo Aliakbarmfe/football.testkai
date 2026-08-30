@@ -863,10 +863,13 @@
             `).join('');
         }
 
-        // ۴. رندر افتخارات (پاپ‌آپ)
+        // ۴. رندر افتخارات (پاپ‌آپ) با مرتب‌سازی بر اساس رتبه (rank)
         function renderHonors(honors) {
             const container = document.getElementById('honorsList');
             if (honors.length === 0) { container.innerHTML = '<p>اطلاعاتی یافت نشد.</p>'; return; }
+
+            // مرتب‌سازی صعودی بر اساس رتبه (مثلا رتبه ۱ بالاتر از رتبه ۲ قرار می‌گیرد)
+            honors.sort((a, b) => (Number(a.rank) || Infinity) - (Number(b.rank) || Infinity));
 
             container.innerHTML = honors.map(h => `
                 <div class="honor-card">
