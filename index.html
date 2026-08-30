@@ -199,6 +199,13 @@
             color: var(--text-white);
             border: 1px solid var(--accent-blue);
         }
+        .btn-games {
+            left: 30px;
+            bottom: 90px;
+            background-color: var(--bg-card);
+            color: var(--text-white);
+            border: 1px solid var(--primary-green);
+        }
 
         /* ==========================================
            پاپ‌آپ‌ها (Modals - 90% صفحه)
@@ -233,6 +240,13 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
+
+        /* استایل اختصاصی پاپ‌آپ 95 درصد برای بازی‌ها */
+        .modal-content.modal-large {
+            width: 95vw;
+            height: 95vh;
+        }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -251,6 +265,42 @@
             flex: 1;
             overflow-y: auto;
             padding-left: 5px;
+        }
+
+        .games-topic-banner {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            padding: 12px;
+            background: rgba(0, 255, 135, 0.05);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px dashed rgba(0, 255, 135, 0.3);
+        }
+
+        .popup-game-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+        }
+        .popup-game-team {
+            font-weight: 700;
+            font-size: 1rem;
+            width: 45%;
+        }
+        .popup-game-team.left {
+            text-align: left;
+        }
+        .popup-game-vs {
+            color: var(--accent-gold);
+            font-weight: 900;
+            font-size: 0.9rem;
         }
 
         /* شبکه کارت‌های خرید گل (۲ ستونه) */
@@ -307,6 +357,7 @@
             .floating-btn { padding: 12px 18px; font-size: 0.85rem; bottom: 20px; }
             .btn-buy-goal { right: 15px; }
             .btn-news { left: 15px; }
+            .btn-games { left: 15px; bottom: 75px; }
         }
     </style>
 </head>
@@ -357,10 +408,29 @@
         <span>خرید گل</span>
     </button>
 
+    <button class="floating-btn btn-games" onclick="openModal('gamesModal')">
+        <i class="fa-solid fa-gamepad" style="font-size: 1.1rem;"></i>
+        <span>بازی ها</span>
+    </button>
+
     <button class="floating-btn btn-news" onclick="openModal('newsModal')">
         <i class="fa-solid fa-newspaper" style="font-size: 1.1rem;"></i>
         <span>اخبار لیگ</span>
     </button>
+
+    <!-- 0. پاپ‌آپ بازی‌ها (95% صفحه) -->
+    <div class="modal-overlay" id="gamesModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <div class="modal-title">برنامه بازی‌ها</div>
+                <button class="modal-close" onclick="closeModal('gamesModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="gamesTopicContainer" class="games-topic-banner">در حال بارگذاری موضوع...</div>
+                <div id="gamesList">در حال بارگذاری...</div>
+            </div>
+        </div>
+    </div>
 
     <!-- 1. پاپ‌آپ تالار افتخارات -->
     <div class="modal-overlay" id="honorsModal">
@@ -420,9 +490,36 @@
                 renderHonors(toArray(data.honors));
                 renderProducts(toArray(data.products));
                 renderNews(toArray(data.news));
+                renderGamesTopic(data.gamesTopic);
+                renderGames(toArray(data.games));
             } catch (err) {
                 console.error("خطا در دریافت اطلاعات:", err);
             }
+        }
+
+        // ۰. رندر پاپ‌آپ بازی‌ها و موضوع
+        function renderGamesTopic(topicData) {
+            const container = document.getElementById('gamesTopicContainer');
+            if (!topicData) {
+                container.style.display = 'none';
+                return;
+            }
+            container.style.display = 'block';
+            let topicText = typeof topicData === 'object' ? (topicData.title || topicData.text || JSON.stringify(topicData)) : topicData;
+            container.textContent = topicText;
+        }
+
+        function renderGames(games) {
+            const container = document.getElementById('gamesList');
+            if (games.length === 0) { container.innerHTML = '<p>بازی ثبت نشده است.</p>'; return; }
+
+            container.innerHTML = games.map(g => `
+                <div class="popup-game-row">
+                    <div class="popup-game-team">${g.team1 || 'تیم ۱'}</div>
+                    <div class="popup-game-vs">VS</div>
+                    <div class="popup-game-team left">${g.team2 || 'تیم ۲'}</div>
+                </div>
+            `).join('');
         }
 
         // ۱. رندر جدول تیم‌ها (سورت بر اساس امتیاز)
