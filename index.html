@@ -384,29 +384,26 @@
             font-size: 0.9rem;
         }
 
-        /* شبکه کارت‌های خرید گل (۲ ستونه) */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+        /* لیست محصولات خرید گل (تک ستونه) */
+        .products-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         .product-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 15px;
-            aspect-ratio: 1 / 1;
+            border-radius: 12px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            text-align: center;
-            padding: 10px;
+            padding: 16px 20px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s, border-color 0.2s;
         }
-        .product-card:hover { transform: scale(1.03); border-color: var(--accent-gold); }
-        .product-name { font-weight: 800; font-size: 1rem; margin-bottom: 8px; }
-        .product-price { color: var(--primary-green); font-weight: 700; font-size: 0.9rem; }
+        .product-card:hover { transform: translateY(-2px); border-color: var(--accent-gold); }
+        .product-name { font-weight: 800; font-size: 1rem; }
+        .product-price { color: var(--primary-green); font-weight: 700; font-size: 0.95rem; }
 
         /* آیتم‌های افتخارات */
         .honor-card {
@@ -542,11 +539,11 @@
     <div class="modal-overlay" id="productsModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">فروشگاه / خرید گل</div>
+                <div class="modal-title">🚨 تعرفه رسمی خرید گل | لیگ مجازی کلاسیک ⚽</div>
                 <button class="modal-close" onclick="closeModal('productsModal')">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="products-grid" id="productsList">در حال بارگذاری...</div>
+                <div class="products-list" id="productsList">در حال بارگذاری...</div>
             </div>
         </div>
     </div>
