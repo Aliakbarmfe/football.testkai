@@ -328,6 +328,12 @@
             height: 95vh;
         }
 
+        /* استایل اختصاصی پاپ‌آپ کوچک جزئیات محصول */
+        .modal-content.modal-small {
+            height: auto;
+            max-height: 80vh;
+        }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -405,6 +411,39 @@
         .product-name { font-weight: 800; font-size: 1rem; }
         .product-price { color: var(--primary-green); font-weight: 700; font-size: 0.95rem; }
 
+        /* استایل اطلاعات جزئیات محصول */
+        .product-details-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+        .product-details-name {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--text-white);
+            margin-bottom: 10px;
+        }
+        .product-details-price {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--primary-green);
+            background: rgba(0, 255, 135, 0.1);
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+        .product-details-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            text-align: justify;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+        }
+
         /* آیتم‌های افتخارات */
         .honor-card {
             background: var(--bg-card);
@@ -453,7 +492,6 @@
 
     <div class="container">
         
-        <!-- تالار افتخارات -->
         <section class="trophy-section" onclick="openModal('honorsModal')">
             <div class="trophy-header">
                 <i class="fa-solid fa-crown"></i>
@@ -461,19 +499,16 @@
             </div>
         </section>
 
-        <!-- جدول رده‌بندی -->
         <section class="teams-section">
             <div class="section-title">جدول رده‌بندی تیم‌ها</div>
             <div id="teamsContainer">در حال دریافت اطلاعات...</div>
         </section>
 
-        <!-- نتایج بازی‌ها -->
         <section class="matches-section">
             <div class="section-title">🏆🔥 نتایج رسمی | جام باشگاه‌های جهان کلاسیک ⚽🌍</div>
             <div id="matchesContainer">در حال دریافت اطلاعات...</div>
         </section>
 
-        <!-- آقای گل -->
         <section class="top-scorers-section">
             <div class="section-title">🏆🔥 جدول گلزنان | جام باشگاه‌های جهان کلاسیک ⚽</div>
             <div id="topScorersContainer">در حال دریافت اطلاعات...</div>
@@ -481,7 +516,6 @@
 
     </div>
 
-    <!-- دکمه‌های شناور -->
     <button class="floating-btn btn-buy-goal" onclick="openModal('productsModal')">
         <i class="fa-solid fa-futbol" style="font-size: 1.2rem;"></i>
         <span>خرید گل</span>
@@ -489,7 +523,7 @@
 
     <button class="floating-btn btn-games" onclick="openModal('gamesModal')">
         <i class="fa-solid fa-gamepad" style="font-size: 1.1rem;"></i>
-        <span>بازی ها جدید</span>
+        <span>برنامه بازی ها</span>
     </button>
 
     <button class="floating-btn btn-news" onclick="openModal('newsModal')">
@@ -497,7 +531,6 @@
         <span>اخبار لیگ</span>
     </button>
 
-    <!-- 0. پاپ‌آپ بازی‌ها (95% صفحه) -->
     <div class="modal-overlay" id="gamesModal">
         <div class="modal-content modal-large">
             <div class="modal-header">
@@ -511,7 +544,6 @@
         </div>
     </div>
 
-    <!-- پاپ‌آپ جزییات کامل مسابقه -->
     <div class="modal-overlay" id="matchDetailsModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -519,12 +551,10 @@
                 <button class="modal-close" onclick="closeModal('matchDetailsModal')">&times;</button>
             </div>
             <div class="modal-body" id="matchDetailsBody">
-                <!-- محتوا به صورت دینامیک پر می‌شود -->
-            </div>
+                </div>
         </div>
     </div>
 
-    <!-- 1. پاپ‌آپ تالار افتخارات -->
     <div class="modal-overlay" id="honorsModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -535,7 +565,6 @@
         </div>
     </div>
 
-    <!-- 2. پاپ‌آپ خرید گل -->
     <div class="modal-overlay" id="productsModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -548,7 +577,17 @@
         </div>
     </div>
 
-    <!-- 3. پاپ‌آپ اخبار لیگ -->
+    <div class="modal-overlay" id="productDetailsModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <div class="modal-title">اطلاعات محصول</div>
+                <button class="modal-close" onclick="closeModal('productDetailsModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="productDetailsBody">
+                </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="newsModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -560,8 +599,9 @@
     </div>
 
     <script>
-        // متغیر سراسری برای ذخیره اطلاعات مسابقات جهت دسترسی سریع
+        // متغیرهای سراسری برای ذخیره اطلاعات جهت دسترسی سریع
         let currentMatchesData = [];
+        let currentProductsData = [];
 
         // مدیریت پاپ‌آپ‌ها
         function openModal(id) { document.getElementById(id).classList.add('active'); }
@@ -580,12 +620,13 @@
                 const data = await response.json();
 
                 currentMatchesData = toArray(data.matches);
+                currentProductsData = toArray(data.products);
 
                 renderTeams(toArray(data.teams));
                 renderMatches(currentMatchesData);
                 renderTopScorers(toArray(data.topScorers));
                 renderHonors(toArray(data.honors));
-                renderProducts(toArray(data.products));
+                renderProducts(currentProductsData);
                 renderNews(toArray(data.news));
                 renderGamesTopic(data.gamesTopic);
                 renderGames(toArray(data.games));
@@ -745,11 +786,28 @@
             if (products.length === 0) { container.innerHTML = '<p>محصولی یافت نشد.</p>'; return; }
 
             container.innerHTML = products.map(p => `
-                <div class="product-card" onclick="alert('${p.desc || 'توضیحات ندارد'}')">
+                <div class="product-card" onclick="openProductDetails('${p.id}')">
                     <div class="product-name">${p.name || 'محصول'}</div>
-                    <div class="product-price">${p.price || 0} تومان</div>
+                    <div class="product-price">${p.price || 0}</div>
                 </div>
             `).join('');
+        }
+
+        // تابع نمایش پاپ‌آپ اطلاعات بیشتر محصول
+        function openProductDetails(productId) {
+            const product = currentProductsData.find(p => p.id === productId);
+            if (!product) return;
+
+            const modalBody = document.getElementById('productDetailsBody');
+            modalBody.innerHTML = `
+                <div class="product-details-card">
+                    <div class="product-details-name">${product.name || 'محصول'}</div>
+                    <div class="product-details-price">${product.price || 0}</div>
+                    <div class="product-details-desc">${product.desc || 'توضیحاتی برای این محصول ثبت نشده است.'}</div>
+                </div>
+            `;
+
+            openModal('productDetailsModal');
         }
 
         // ۶. رندر اخبار (پاپ‌آپ)
