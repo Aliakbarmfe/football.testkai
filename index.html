@@ -49,7 +49,6 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* دکمه ارتباط با ما در بالای سایت سمت راست */
         .contact-btn-header {
             position: absolute;
             right: 5%;
@@ -98,7 +97,6 @@
             padding: 0 20px;
         }
 
-        /* تالار افتخارات */
         .trophy-section {
             margin: 30px 0;
             background: linear-gradient(135deg, rgba(22, 27, 38, 0.9) 0%, rgba(31, 38, 55, 0.5) 100%);
@@ -122,7 +120,6 @@
             font-weight: 800;
         }
 
-        /* عناوین بخش‌ها */
         .section-title {
             font-size: 1.2rem;
             font-weight: 800;
@@ -140,7 +137,6 @@
             border-radius: 2px;
         }
 
-        /* جدول رده بندی */
         .team-row {
             display: flex;
             align-items: center;
@@ -160,7 +156,6 @@
         .stat-value { font-weight: 700; font-size: 0.95rem; }
         .stat-value.pts { color: var(--primary-green); font-size: 1.1rem; }
 
-        /* بخش جدید: بازی‌ها */
         .match-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -188,7 +183,6 @@
             font-size: 1.1rem;
         }
 
-        /* استایل اختصاصی پاپ‌آپ جزییات بازی */
         .match-details-header {
             display: flex;
             justify-content: space-around;
@@ -263,7 +257,6 @@
             font-weight: bold;
         }
 
-        /* بخش جدید: آقای گل */
         .scorer-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -277,7 +270,6 @@
         .scorer-info { display: flex; align-items: center; gap: 15px; }
         .scorer-rank { font-weight: 900; color: var(--accent-gold); font-size: 1.1rem; }
 
-        /* دکمه‌های شناور */
         .floating-btn {
             position: fixed;
             bottom: 30px;
@@ -313,7 +305,6 @@
             border: 1px solid var(--primary-green);
         }
 
-        /* استایل فوتر پایینی */
         .site-footer {
             text-align: center;
             padding: 20px;
@@ -324,9 +315,6 @@
             line-height: 1.8;
         }
 
-        /* ==========================================
-           پاپ‌آپ‌ها (Modals - 90% صفحه)
-           ========================================== */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -358,13 +346,11 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
-        /* استایل اختصاصی پاپ‌آپ 95 درصد برای بازی‌ها */
         .modal-content.modal-large {
             width: 95vw;
             height: 95vh;
         }
 
-        /* استایل اختصاصی پاپ‌آپ کوچک جزئیات محصول و ارتباط با ما */
         .modal-content.modal-small {
             height: auto;
             max-height: 80vh;
@@ -390,7 +376,6 @@
             padding-left: 5px;
         }
 
-        /* استایل محتوای ارتباط با ما */
         .contact-box {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -442,7 +427,6 @@
             font-size: 0.9rem;
         }
 
-        /* لیست محصولات خرید گل (تک ستونه) */
         .products-list {
             display: flex;
             flex-direction: column;
@@ -463,7 +447,6 @@
         .product-name { font-weight: 800; font-size: 1rem; }
         .product-price { color: var(--primary-green); font-weight: 700; font-size: 0.95rem; }
 
-        /* استایل اطلاعات جزئیات محصول */
         .product-details-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -496,21 +479,42 @@
             padding-top: 15px;
         }
 
-        /* آیتم‌های افتخارات */
+        /* آیتم‌های افتخارات - به‌روزرسانی استایل استند تالار */
         .honor-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 15px;
+            padding: 15px 20px;
             margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: border-color 0.3s;
         }
+        .honor-rank-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .honor-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+        }
+        .honor-rank-1 { background: rgba(255, 215, 0, 0.2); color: var(--accent-gold); border: 1px solid var(--accent-gold); }
+        .honor-rank-2 { background: rgba(192, 192, 192, 0.2); color: var(--accent-silver); border: 1px solid var(--accent-silver); }
+        .honor-rank-3 { background: rgba(205, 127, 50, 0.2); color: var(--accent-bronze); border: 1px solid var(--accent-bronze); }
+        
         .medals-container { display: flex; gap: 15px; }
         .medal-item { display: flex; align-items: center; gap: 4px; font-weight: 700; }
 
-        /* آیتم‌های اخبار */
         .news-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -534,7 +538,6 @@
 <body>
 
     <header>
-        <!-- دکمه جدید ارتباط با ما سمت راست بالای سایت -->
         <button class="contact-btn-header" onclick="openModal('contactModal')">
             <i class="fa-solid fa-envelope"></i>
             <span>ارتباط با ما</span>
@@ -574,7 +577,6 @@
 
     </div>
 
-    <!-- متن اضافه شده در پایین سایت -->
     <footer class="site-footer">
         طراحی، توسعه و حمایت از این مجموعه با افتخار توسط «کیاکا» ⚡<br>
         با عشق برای پیشرفت و ماندگاری لیگ مجازی کلاسیک ❤️⚽️
@@ -595,7 +597,6 @@
         <span>اخبار لیگ</span>
     </button>
 
-    <!-- پاپ‌آپ جدید ارتباط با ما -->
     <div class="modal-overlay" id="contactModal">
         <div class="modal-content modal-small">
             <div class="modal-header">
@@ -690,21 +691,17 @@
     </div>
 
     <script>
-        // متغیرهای سراسری برای ذخیره اطلاعات جهت دسترسی سریع
         let currentMatchesData = [];
         let currentProductsData = [];
 
-        // مدیریت پاپ‌آپ‌ها
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-        // تبدیل شیء فایربیس به آرایه
         function toArray(data) {
             if (!data) return [];
             return Object.keys(data).map(key => ({ id: key, ...data[key] }));
         }
 
-        // دریافت کلیه اطلاعات از API ورسل
         async function fetchAppData() {
             try {
                 const response = await fetch('/api/getdata');
@@ -726,7 +723,6 @@
             }
         }
 
-        // ثبت و به‌روزرسانی بازدید در فایربیس (مخفیانه در پس‌زمینه)
         async function updateViews() {
             try {
                 await fetch('/api/views', { method: 'POST' });
@@ -735,7 +731,6 @@
             }
         }
 
-        // ۰. رندر پاپ‌آپ بازی‌ها و موضوع
         function renderGamesTopic(topicData) {
             const container = document.getElementById('gamesTopicContainer');
             if (!topicData) {
@@ -760,7 +755,6 @@
             `).join('');
         }
 
-        // ۱. رندر جدول تیم‌ها (سورت بر اساس امتیاز)
         function renderTeams(teams) {
             teams.sort((a, b) => (Number(b.points) || 0) - (Number(a.points) || 0));
             const container = document.getElementById('teamsContainer');
@@ -783,7 +777,6 @@
             `).join('');
         }
 
-        // ۲. رندر نتایج بازی‌ها
         function renderMatches(matches) {
             const container = document.getElementById('matchesContainer');
             if (matches.length === 0) { container.innerHTML = '<p>بازی ثبت نشده است.</p>'; return; }
@@ -797,7 +790,6 @@
             `).join('');
         }
 
-        // تابع نمایش پاپ‌آپ اطلاعات کامل بازی
         function openMatchDetails(matchId) {
             const match = currentMatchesData.find(m => m.id === matchId);
             if (!match) return;
@@ -844,7 +836,6 @@
             openModal('matchDetailsModal');
         }
 
-        // ۳. رندر آقای گل
         function renderTopScorers(scorers) {
             const container = document.getElementById('topScorersContainer');
             if (scorers.length === 0) { container.innerHTML = '<p>اطلاعات آقای گل موجود نیست.</p>'; return; }
@@ -863,27 +854,55 @@
             `).join('');
         }
 
-        // ۴. رندر افتخارات (پاپ‌آپ) با مرتب‌سازی بر اساس رتبه (rank)
+        // ۴. رندر افتخارات به همراه مرتب‌سازی خودکار و سیستم اولویت المپیک
         function renderHonors(honors) {
             const container = document.getElementById('honorsList');
             if (honors.length === 0) { container.innerHTML = '<p>اطلاعاتی یافت نشد.</p>'; return; }
 
-            // مرتب‌سازی صعودی بر اساس رتبه (مثلا رتبه ۱ بالاتر از رتبه ۲ قرار می‌گیرد)
-            honors.sort((a, b) => (Number(a.rank) || Infinity) - (Number(b.rank) || Infinity));
+            // سیستم رتبه‌بندی خودکار و عادلانه (ترتیب المپیکی: طلا > نقره > برنز > مجموع مدال‌ها)
+            honors.sort((a, b) => {
+                const goldA = Number(a.gold) || 0;
+                const goldB = Number(b.gold) || 0;
+                const silverA = Number(a.silver) || 0;
+                const silverB = Number(b.silver) || 0;
+                const bronzeA = Number(a.bronze) || 0;
+                const bronzeB = Number(b.bronze) || 0;
 
-            container.innerHTML = honors.map(h => `
-                <div class="honor-card">
-                    <div style="font-weight: 800;">${h.coach || 'نام مربی'}</div>
-                    <div class="medals-container">
-                        <div class="medal-item"><i class="fa-solid fa-medal" style="color: var(--accent-gold);"></i> ${h.gold || 0}</div>
-                        <div class="medal-item"><i class="fa-solid fa-medal" style="color: var(--accent-silver);"></i> ${h.silver || 0}</div>
-                        <div class="medal-item"><i class="fa-solid fa-medal" style="color: var(--accent-bronze);"></i> ${h.bronze || 0}</div>
+                if (goldB !== goldA) return goldB - goldA; // ۱. بررسی مدال طلا
+                if (silverB !== silverA) return silverB - silverA; // ۲. بررسی مدال نقره
+                if (bronzeB !== bronzeA) return bronzeB - bronzeA; // ۳. بررسی مدال برنز
+                
+                // ۴. مجموع مدال‌ها در صورت برابری مطلق
+                const totalA = goldA + silverA + bronzeA;
+                const totalB = goldB + silverB + bronzeB;
+                return totalB - totalA;
+            });
+
+            container.innerHTML = honors.map((h, index) => {
+                const rankNum = index + 1;
+                let badgeClass = '';
+                let rankIcon = rankNum;
+
+                if (rankNum === 1) { badgeClass = 'honor-rank-1'; rankIcon = '<i class="fa-solid fa-crown"></i>'; }
+                else if (rankNum === 2) { badgeClass = 'honor-rank-2'; }
+                else if (rankNum === 3) { badgeClass = 'honor-rank-3'; }
+
+                return `
+                    <div class="honor-card">
+                        <div class="honor-rank-wrapper">
+                            <div class="honor-badge ${badgeClass}">${rankIcon}</div>
+                            <div style="font-weight: 800;">${h.coach || 'نام مربی'}</div>
+                        </div>
+                        <div class="medals-container">
+                            <div class="medal-item"><i class="fa-solid fa-medal" style="color: var(--accent-gold);"></i> ${h.gold || 0}</div>
+                            <div class="medal-item"><i class="fa-solid fa-medal" style="color: var(--accent-silver);"></i> ${h.silver || 0}</div>
+                            <div class="medal-item"><i class="fa-solid fa-medal" style="color: var(--accent-bronze);"></i> ${h.bronze || 0}</div>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        // ۵. رندر محصولات (پاپ‌آپ)
         function renderProducts(products) {
             const container = document.getElementById('productsList');
             if (products.length === 0) { container.innerHTML = '<p>محصولی یافت نشد.</p>'; return; }
@@ -896,7 +915,6 @@
             `).join('');
         }
 
-        // تابع نمایش پاپ‌آپ اطلاعات بیشتر محصول
         function openProductDetails(productId) {
             const product = currentProductsData.find(p => p.id === productId);
             if (!product) return;
@@ -913,7 +931,6 @@
             openModal('productDetailsModal');
         }
 
-        // ۶. رندر اخبار (پاپ‌آپ)
         function renderNews(news) {
             const container = document.getElementById('newsList');
             if (news.length === 0) { container.innerHTML = '<p>خبری یافت نشد.</p>'; return; }
@@ -926,7 +943,6 @@
             `).join('');
         }
 
-        // بارگذاری دیتای اولیه و ثبت بازدید در پس‌زمینه
         fetchAppData();
         updateViews();
     </script>
