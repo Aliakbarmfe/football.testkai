@@ -146,6 +146,12 @@
             border-radius: 12px;
             padding: 16px 24px;
             margin-bottom: 12px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .team-row:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
         }
         .team-info { display: flex; align-items: center; gap: 20px; flex: 2; }
         .team-rank { font-size: 1.2rem; font-weight: 900; color: var(--text-muted); width: 30px; }
@@ -647,6 +653,17 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="teamDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="teamDetailsTitle">پروفایل و اطلاعات تیم</div>
+                <button class="modal-close" onclick="closeModal('teamDetailsModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="teamDetailsBody">
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="honorsModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -693,6 +710,7 @@
     <script>
         let currentMatchesData = [];
         let currentProductsData = [];
+        let currentTeamsData = [];
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
@@ -709,8 +727,9 @@
 
                 currentMatchesData = toArray(data.matches);
                 currentProductsData = toArray(data.products);
+                currentTeamsData = toArray(data.teams);
 
-                renderTeams(toArray(data.teams));
+                renderTeams(currentTeamsData);
                 renderMatches(currentMatchesData);
                 renderTopScorers(toArray(data.topScorers));
                 renderHonors(toArray(data.honors));
@@ -762,7 +781,7 @@
             if (teams.length === 0) { container.innerHTML = '<p>داده‌ای ثبت نشده است.</p>'; return; }
 
             container.innerHTML = teams.map((team, index) => `
-                <div class="team-row">
+                <div class="team-row" onclick="openTeamDetails('${team.id}')">
                     <div class="team-info">
                         <span class="team-rank">${String(index + 1).padStart(2, '۰')}</span>
                         <div class="team-logo"><i class="fa-solid fa-shield"></i></div>
@@ -775,6 +794,53 @@
                     </div>
                 </div>
             `).join('');
+        }
+
+        function openTeamDetails(teamId) {
+            const team = currentTeamsData.find(t => t.id === teamId);
+            if (!team) return;
+
+            document.getElementById('teamDetailsTitle').textContent = `اطلاعات تیم ${team.name || ''}`;
+
+            let playersListHtml = '<li style="color:var(--text-muted)">بازیکنی برای این تیم ثبت نشده است</li>';
+            
+            if (team.players) {
+                let playersArray = [];
+                if (Array.isArray(team.players)) {
+                    playersArray = team.players;
+                } else if (typeof team.players === 'object') {
+                    playersArray = Object.values(team.players);
+                } else if (typeof team.players === 'string') {
+                    playersArray = team.players.split(',').map(p => p.trim());
+                }
+
+                if (playersArray.length > 0) {
+                    playersListHtml = playersArray.map(p => `<li>${p}</li>`).join('');
+                }
+            }
+
+            const modalBody = document.getElementById('teamDetailsBody');
+            modalBody.innerHTML = `
+                <div class="match-details-header">
+                    <div class="match-details-team-title" style="font-size: 1.5rem;">${team.name || '-'}</div>
+                </div>
+
+                <div class="match-details-box">
+                    <div class="match-details-box-title">مشخصات و کادر تیم</div>
+                    <div class="match-info-item"><i class="fa-solid fa-user-tie" style="color:var(--accent-gold); margin-left:6px;"></i> مربی: <span>${team.coach || '-'}</span></div>
+                    <div class="match-info-item"><i class="fa-solid fa-hashtag" style="color:var(--accent-blue); margin-left:6px;"></i> رسانه: <span>${team.media || '-'}</span></div>
+                    <div class="match-info-item"><i class="fa-solid fa-chart-simple" style="color:var(--primary-green); margin-left:6px;"></i> امتیاز: <span>${team.points || 0}</span> | تفاضل گل: <span>${team.goals || 0}</span> | بازی‌ها: <span>${team.played || 0}</span></div>
+                </div>
+
+                <div class="match-details-box" style="margin-top: 15px;">
+                    <div class="match-details-box-title"><i class="fa-solid fa-users" style="color:var(--primary-green); margin-left:6px;"></i> لیست بازیکنان</div>
+                    <ul class="players-list">
+                        ${playersListHtml}
+                    </ul>
+                </div>
+            `;
+
+            openModal('teamDetailsModal');
         }
 
         function renderMatches(matches) {
