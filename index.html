@@ -40,8 +40,10 @@
 
         header {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            gap: 15px;
             padding: 20px 5%;
             background: rgba(11, 14, 20, 0.8);
             position: relative;
@@ -50,16 +52,12 @@
         }
 
         .contact-btn-header {
-            position: absolute;
-            right: 5%;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
             background: rgba(22, 27, 38, 0.8);
             border: 1px solid rgba(255, 215, 0, 0.3);
-            padding: 6px 14px;
+            padding: 8px 18px;
             border-radius: 20px;
             color: var(--accent-gold);
             font-weight: 700;
@@ -485,7 +483,6 @@
             padding-top: 15px;
         }
 
-        /* آیتم‌های افتخارات - به‌روزرسانی استایل استند تالار */
         .honor-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -544,17 +541,17 @@
 <body>
 
     <header>
-        <button class="contact-btn-header" onclick="openModal('contactModal')">
-            <i class="fa-solid fa-envelope"></i>
-            <span>ارتباط با ما</span>
-        </button>
-
         <div class="header-center">
             <div class="logo-container">
                 <img src="./IMG_20260827_235858_798.jpg" alt="لوگو" class="logo-img">
                 <span class="league-title">لیگ مجازی کلاسیک</span>
             </div>
         </div>
+
+        <button class="contact-btn-header" onclick="openModal('contactModal')">
+            <i class="fa-solid fa-envelope"></i>
+            <span>ارتباط با ما</span>
+        </button>
     </header>
 
     <div class="container">
@@ -920,12 +917,10 @@
             `).join('');
         }
 
-        // ۴. رندر افتخارات به همراه مرتب‌سازی خودکار و سیستم اولویت المپیک
         function renderHonors(honors) {
             const container = document.getElementById('honorsList');
             if (honors.length === 0) { container.innerHTML = '<p>اطلاعاتی یافت نشد.</p>'; return; }
 
-            // سیستم رتبه‌بندی خودکار و عادلانه (ترتیب المپیکی: طلا > نقره > برنز > مجموع مدال‌ها)
             honors.sort((a, b) => {
                 const goldA = Number(a.gold) || 0;
                 const goldB = Number(b.gold) || 0;
@@ -934,11 +929,10 @@
                 const bronzeA = Number(a.bronze) || 0;
                 const bronzeB = Number(b.bronze) || 0;
 
-                if (goldB !== goldA) return goldB - goldA; // ۱. بررسی مدال طلا
-                if (silverB !== silverA) return silverB - silverA; // ۲. بررسی مدال نقره
-                if (bronzeB !== bronzeA) return bronzeB - bronzeA; // ۳. بررسی مدال برنز
+                if (goldB !== goldA) return goldB - goldA;
+                if (silverB !== silverA) return silverB - silverA;
+                if (bronzeB !== bronzeA) return bronzeB - bronzeA;
                 
-                // ۴. مجموع مدال‌ها در صورت برابری مطلق
                 const totalA = goldA + silverA + bronzeA;
                 const totalB = goldB + silverB + bronzeB;
                 return totalB - totalA;
