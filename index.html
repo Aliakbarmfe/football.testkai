@@ -481,6 +481,7 @@
             text-align: justify;
             border-top: 1px solid var(--border-color);
             padding-top: 15px;
+            cursor: pointer;
         }
 
         .honor-card {
@@ -980,13 +981,48 @@
             if (!product) return;
 
             const modalBody = document.getElementById('productDetailsBody');
+            const descText = product.desc || 'توضیحاتی برای این محصول ثبت نشده است.';
+
             modalBody.innerHTML = `
                 <div class="product-details-card">
                     <div class="product-details-name">${product.name || 'محصول'}</div>
                     <div class="product-details-price">${product.price || 0}</div>
-                    <div class="product-details-desc">${product.desc || 'توضیحاتی برای این محصول ثبت نشده است.'}</div>
+                    <div class="product-details-desc" id="productDescText">${descText}</div>
                 </div>
             `;
+
+            const descElement = document.getElementById('productDescText');
+            descElement.onclick = function() {
+                const phoneRegex = /(?:\+?98|0)?9\d{9}/g;
+                const idRegex = /@[a-zA-Z0-9_]{3,}|[a-zA-Z0-9_]{3,}@/g;
+
+                const phones = descText.match(phoneRegex) || [];
+                const ids = descText.match(idRegex) || [];
+
+                const hasPhone = phones.length > 0;
+                const hasId = ids.length > 0;
+
+                const copyToClipboard = (text, label) => {
+                    navigator.clipboard.writeText(text).then(() => {
+                        alert(`${label} با موفقیت کپی شد: ${text}`);
+                    }).catch(err => {
+                        console.error('خطا در کپی:', err);
+                    });
+                };
+
+                if (hasPhone && hasId) {
+                    const choice = prompt(`کدام مورد کپی شود؟\n1: آیدی (${ids[0]})\n2: شماره تلفن (${phones[0]})\nعدد 1 یا 2 را وارد کنید:`);
+                    if (choice === '1') {
+                        copyToClipboard(ids[0], 'آیدی');
+                    } else if (choice === '2') {
+                        copyToClipboard(phones[0], 'شماره تلفن');
+                    }
+                } else if (hasId) {
+                    copyToClipboard(ids[0], 'آیدی');
+                } else if (hasPhone) {
+                    copyToClipboard(phones[0], 'شماره تلفن');
+                }
+            };
 
             openModal('productDetailsModal');
         }
@@ -1008,3 +1044,4 @@
     </script>
 </body>
 </html>
+ 
