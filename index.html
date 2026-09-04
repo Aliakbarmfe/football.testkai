@@ -773,7 +773,18 @@
         }
 
         function renderTeams(teams) {
-            teams.sort((a, b) => (Number(b.points) || 0) - (Number(a.points) || 0));
+            teams.sort((a, b) => {
+                const goalDiffA = parseFloat(a.goals) || 0;
+                const goalDiffB = parseFloat(b.goals) || 0;
+                
+                if (goalDiffB !== goalDiffA) {
+                    return goalDiffB - goalDiffA;
+                }
+                
+                const pointsA = parseFloat(a.points) || 0;
+                const pointsB = parseFloat(b.points) || 0;
+                return pointsB - pointsA;
+            });
             const container = document.getElementById('teamsContainer');
             
             if (teams.length === 0) { container.innerHTML = '<p>داده‌ای ثبت نشده است.</p>'; return; }
@@ -1044,4 +1055,3 @@
     </script>
 </body>
 </html>
- 
