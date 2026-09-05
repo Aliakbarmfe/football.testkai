@@ -774,16 +774,16 @@
 
         function renderTeams(teams) {
             teams.sort((a, b) => {
-                const goalDiffA = parseFloat(a.goals) || 0;
-                const goalDiffB = parseFloat(b.goals) || 0;
-                
-                if (goalDiffB !== goalDiffA) {
-                    return goalDiffB - goalDiffA;
-                }
-                
                 const pointsA = parseFloat(a.points) || 0;
                 const pointsB = parseFloat(b.points) || 0;
-                return pointsB - pointsA;
+                
+                if (pointsB !== pointsA) {
+                    return pointsB - pointsA;
+                }
+                
+                const goalDiffA = parseFloat(a.goals) || 0;
+                const goalDiffB = parseFloat(b.goals) || 0;
+                return goalDiffB - goalDiffA;
             });
             const container = document.getElementById('teamsContainer');
             
