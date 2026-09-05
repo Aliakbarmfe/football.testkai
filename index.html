@@ -169,12 +169,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
-        }
-        .match-card:hover {
-            background: var(--bg-card-hover);
-            transform: translateY(-2px);
         }
         .match-team { font-weight: 700; font-size: 1rem; width: 40%; }
         .match-team.left { text-align: left; }
@@ -919,7 +913,7 @@
             if (matches.length === 0) { container.innerHTML = '<p>بازی ثبت نشده است.</p>'; return; }
 
             container.innerHTML = matches.map(m => `
-                <div class="match-card" onclick="openMatchDetails('${m.id}')">
+                <div class="match-card">
                     <div class="match-team">${m.team1 || 'تیم ۱'}</div>
                     <div class="match-score">${m.goals1 || 0} - ${m.goals2 || 0}</div>
                     <div class="match-team left">${m.team2 || 'تیم ۲'}</div>
