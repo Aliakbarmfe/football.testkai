@@ -955,10 +955,16 @@
             const container = document.getElementById('topScorersContainer');
             if (scorers.length === 0) { container.innerHTML = '<p>اطلاعات آقای گل موجود نیست.</p>'; return; }
 
-            container.innerHTML = scorers.map(s => `
+            scorers.sort((a, b) => {
+                const goalsA = parseFloat(a.goals) || 0;
+                const goalsB = parseFloat(b.goals) || 0;
+                return goalsB - goalsA;
+            });
+
+            container.innerHTML = scorers.map((s, index) => `
                 <div class="scorer-card">
                     <div class="scorer-info">
-                        <span class="scorer-rank">#${s.rank || '-'}</span>
+                        <span class="scorer-rank">#${index + 1}</span>
                         <div>
                             <div style="font-weight: 800;">${s.player || '-'} (${s.flag || ''})</div>
                             <div style="font-size: 0.8rem; color: var(--text-muted);">${s.team || '-'}</div>
