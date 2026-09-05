@@ -544,8 +544,17 @@
             border-radius: 12px;
             padding: 18px;
             margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .news-title { font-size: 1.15rem; font-weight: 800; color: var(--accent-blue); margin-bottom: 8px; }
+        .news-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+        }
+        .news-title { font-size: 1.05rem; font-weight: 800; color: var(--accent-blue); }
         .news-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
 
         @media (max-width: 768px) {
@@ -725,10 +734,22 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="newsDetailsModal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <div class="modal-title" id="newsDetailsTitle">جزئیات خبر</div>
+                <button class="modal-close" onclick="closeModal('newsDetailsModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="newsDetailsBody">
+            </div>
+        </div>
+    </div>
+
     <script>
         let currentMatchesData = [];
         let currentProductsData = [];
         let currentTeamsData = [];
+        let currentNewsData = [];
         let totalNewsCount = 0;
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
@@ -766,13 +787,14 @@
                 currentMatchesData = toArray(data.matches);
                 currentProductsData = toArray(data.products);
                 currentTeamsData = toArray(data.teams);
+                currentNewsData = toArray(data.news);
 
                 renderTeams(currentTeamsData);
                 renderMatches(currentMatchesData);
                 renderTopScorers(toArray(data.topScorers));
                 renderHonors(toArray(data.honors));
                 renderProducts(currentProductsData);
-                renderNews(toArray(data.news));
+                renderNews(currentNewsData);
                 renderGamesTopic(data.gamesTopic);
                 renderGames(toArray(data.games));
             } catch (err) {
@@ -1092,11 +1114,28 @@
             if (news.length === 0) { container.innerHTML = '<p>خبری یافت نشد.</p>'; return; }
 
             container.innerHTML = news.map(n => `
-                <div class="news-card">
-                    <div class="news-title">${n.title || ''}</div>
-                    <div class="news-desc">${n.desc || ''}</div>
+                <div class="news-card" onclick="openNewsDetails('${n.id}')">
+                    <div class="news-title">${n.title || 'بدون عنوان'}</div>
+                    <i class="fa-solid fa-chevron-left" style="color: var(--text-muted); font-size: 0.9rem;"></i>
                 </div>
             `).join('');
+        }
+
+        function openNewsDetails(newsId) {
+            const newsItem = currentNewsData.find(n => n.id === newsId);
+            if (!newsItem) return;
+
+            document.getElementById('newsDetailsTitle').textContent = newsItem.title || 'مشاهده خبر';
+
+            const modalBody = document.getElementById('newsDetailsBody');
+            modalBody.innerHTML = `
+                <div class="contact-box" style="margin-top: 5px;">
+                    <h3 style="color: var(--accent-blue); margin-top: 0;">${newsItem.title || ''}</h3>
+                    <div class="news-desc" style="white-space: pre-line;">${newsItem.desc || 'توضیحاتی برای این خبر ثبت نشده است.'}</div>
+                </div>
+            `;
+
+            openModal('newsDetailsModal');
         }
 
         fetchAppData();
