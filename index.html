@@ -175,10 +175,16 @@
         .match-score {
             background: rgba(0, 255, 135, 0.1);
             color: var(--primary-green);
-            padding: 6px 16px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-weight: 900;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
+            min-width: 90px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
         }
 
         .match-details-header {
@@ -558,6 +564,8 @@
             .btn-news { left: 15px; bottom: 15px; }
             .btn-games { left: 15px; bottom: 68px; }
             .match-details-grid { grid-template-columns: 1fr; }
+            .match-card { padding: 12px 10px; }
+            .match-score { font-size: 0.9rem; min-width: 80px; padding: 5px 8px; }
         }
     </style>
 </head>
