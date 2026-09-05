@@ -300,6 +300,21 @@
             background-color: var(--bg-card);
             color: var(--text-white);
             border: 1px solid var(--accent-blue);
+            position: relative;
+        }
+        .news-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background-color: #ff3b30;
+            color: #ffffff;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            border: 2px solid var(--bg-main);
+            box-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
+            display: none;
         }
         .btn-games {
             left: 30px;
@@ -599,6 +614,7 @@
     <button class="floating-btn btn-news" onclick="openModal('newsModal')">
         <i class="fa-solid fa-newspaper" style="font-size: 1.1rem;"></i>
         <span>اخبار لیگ</span>
+        <span class="news-badge" id="newsBadge">0</span>
     </button>
 
     <div class="modal-overlay" id="contactModal">
@@ -709,8 +725,14 @@
         let currentMatchesData = [];
         let currentProductsData = [];
         let currentTeamsData = [];
+        let totalNewsCount = 0;
 
-        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            if (id === 'newsModal') {
+                markNewsAsRead();
+            }
+        }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
         function toArray(data) {
@@ -1040,14 +1062,38 @@
 
         function renderNews(news) {
             const container = document.getElementById('newsList');
-            if (news.length === 0) { container.innerHTML = '<p>خبری یافت نشد.</p>'; return; }
+            totalNewsCount = news.length;
 
-            container.innerHTML = news.map(n => `
-                <div class="news-card">
-                    <div class="news-title">${n.title || ''}</div>
-                    <div class="news-desc">${n.desc || ''}</div>
-                </div>
-            `).join('');
+            if (news.length === 0) { 
+                container.innerHTML = '<p>خبری یافت نشد.</p>'; 
+            } else {
+                container.innerHTML = news.map(n => `
+                    <div class="news-card">
+                        <div class="news-title">${n.title || ''}</div>
+                        <div class="news-desc">${n.desc || ''}</div>
+                    </div>
+                `).join('');
+            }
+
+            updateNewsBadge();
+        }
+
+        function updateNewsBadge() {
+            const readNewsCount = parseInt(localStorage.getItem('readNewsCount') || '0', 10);
+            const unreadCount = totalNewsCount - readNewsCount;
+            const badge = document.getElementById('newsBadge');
+
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.style.display = 'block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function markNewsAsRead() {
+            localStorage.setItem('readNewsCount', totalNewsCount);
+            updateNewsBadge();
         }
 
         fetchAppData();
