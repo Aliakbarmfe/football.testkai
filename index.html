@@ -307,14 +307,14 @@
             top: -6px;
             right: -6px;
             background-color: #ff3b30;
-            color: #ffffff;
+            color: #fff;
             border-radius: 50%;
             padding: 2px 7px;
             font-size: 0.75rem;
             font-weight: 900;
-            border: 2px solid var(--bg-main);
-            box-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
             display: none;
+            box-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
+            line-height: 1;
         }
         .btn-games {
             left: 30px;
@@ -611,7 +611,7 @@
         <span>برنامه بازی ها</span>
     </button>
 
-    <button class="floating-btn btn-news" onclick="openModal('newsModal')">
+    <button class="floating-btn btn-news" onclick="openNewsModal()">
         <i class="fa-solid fa-newspaper" style="font-size: 1.1rem;"></i>
         <span>اخبار لیگ</span>
         <span class="news-badge" id="newsBadge">0</span>
@@ -725,14 +725,9 @@
         let currentMatchesData = [];
         let currentProductsData = [];
         let currentTeamsData = [];
-        let totalNewsCount = 0;
+        let currentNewsData = [];
 
-        function openModal(id) {
-            document.getElementById(id).classList.add('active');
-            if (id === 'newsModal') {
-                markNewsAsRead();
-            }
-        }
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
         function toArray(data) {
@@ -748,13 +743,14 @@
                 currentMatchesData = toArray(data.matches);
                 currentProductsData = toArray(data.products);
                 currentTeamsData = toArray(data.teams);
+                currentNewsData = toArray(data.news);
 
                 renderTeams(currentTeamsData);
                 renderMatches(currentMatchesData);
                 renderTopScorers(toArray(data.topScorers));
                 renderHonors(toArray(data.honors));
                 renderProducts(currentProductsData);
-                renderNews(toArray(data.news));
+                renderNews(currentNewsData);
                 renderGamesTopic(data.gamesTopic);
                 renderGames(toArray(data.games));
             } catch (err) {
@@ -1062,38 +1058,39 @@
 
         function renderNews(news) {
             const container = document.getElementById('newsList');
-            totalNewsCount = news.length;
+            if (news.length === 0) { container.innerHTML = '<p>خبری یافت نشد.</p>'; return; }
 
-            if (news.length === 0) { 
-                container.innerHTML = '<p>خبری یافت نشد.</p>'; 
-            } else {
-                container.innerHTML = news.map(n => `
-                    <div class="news-card">
-                        <div class="news-title">${n.title || ''}</div>
-                        <div class="news-desc">${n.desc || ''}</div>
-                    </div>
-                `).join('');
-            }
+            container.innerHTML = news.map(n => `
+                <div class="news-card">
+                    <div class="news-title">${n.title || ''}</div>
+                    <div class="news-desc">${n.desc || ''}</div>
+                </div>
+            `).join('');
 
-            updateNewsBadge();
+            updateNewsBadge(news);
         }
 
-        function updateNewsBadge() {
-            const readNewsCount = parseInt(localStorage.getItem('readNewsCount') || '0', 10);
-            const unreadCount = totalNewsCount - readNewsCount;
+        function updateNewsBadge(news) {
+            const seenNewsIds = JSON.parse(localStorage.getItem('seen_news_ids') || '[]');
+            const unreadCount = news.filter(n => !seenNewsIds.includes(n.id)).length;
             const badge = document.getElementById('newsBadge');
 
             if (unreadCount > 0) {
                 badge.textContent = unreadCount;
-                badge.style.display = 'block';
+                badge.style.display = 'inline-block';
             } else {
                 badge.style.display = 'none';
             }
         }
 
-        function markNewsAsRead() {
-            localStorage.setItem('readNewsCount', totalNewsCount);
-            updateNewsBadge();
+        function openNewsModal() {
+            openModal('newsModal');
+            if (currentNewsData && currentNewsData.length > 0) {
+                const allNewsIds = currentNewsData.map(n => n.id);
+                localStorage.setItem('seen_news_ids', JSON.stringify(allNewsIds));
+            }
+            const badge = document.getElementById('newsBadge');
+            if (badge) badge.style.display = 'none';
         }
 
         fetchAppData();
