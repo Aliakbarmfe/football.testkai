@@ -17,12 +17,12 @@
             color: #202124;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            align-items: center;
             min-height: 100vh;
             padding: 40px 20px;
         }
 
-        /* حالت تاریک خودکار اگر سیستم کاربر روی Dark Mode باشد */
+        /* حالت تاریک خودکار */
         @media (prefers-color-scheme: dark) {
             body {
                 background-color: #202124;
@@ -41,11 +41,11 @@
 
         .container {
             max-width: 600px;
-            margin: 80px auto 0 auto;
+            margin-top: 80px;
             width: 100%;
         }
 
-        /* آیکون هشدار مشابه مرورگر */
+        /* آیکون هشدار */
         .icon-container {
             margin-bottom: 20px;
         }
@@ -80,13 +80,24 @@
             text-align: right;
         }
 
+        /* فوتر با فاصله کمتر از بالا */
         .footer {
-            text-align: center;
-            font-size: 14px;
+            max-width: 600px;
+            width: 100%;
+            text-align: left;
+            font-size: 13px;
             color: #70757a;
             direction: ltr;
             font-family: monospace;
+            margin-top: 40px;
             padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .footer {
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+            }
         }
     </style>
 </head>
@@ -107,13 +118,13 @@
         <p class="sub-text">سایت مورد نظر در حال حاضر پاسخگو نیست یا زیر بار ترافیک قرار دارد. لطفاً چند دقیقه دیگر مجدداً تلاش کنید.</p>
         <p class="sub-text">در صورت تداوم مشکل، با پشتیبانی یا مدیر سرور تماس بگیرید.</p>
 
-        <!-- کد ارور ساختگی جهت واقعی‌تر شدن -->
+        <!-- کد ارور ساختگی -->
         <div class="error-code">ERR_TEMPORARILY_UNAVAILABLE</div>
-    </div>
 
-    <!-- فوتر با شناسه شما -->
-    <div class="footer">
-        Project created by: @cod_fizon
+        <!-- فوتر با شناسه شما -->
+        <div class="footer">
+            Project created by: @cod_fizon
+        </div>
     </div>
 
 </body>
