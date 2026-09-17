@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اخبار لیگ | لیگ مجازی کلاسیک</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #0b0e14;
+            --bg-card: #161b26;
+            --bg-card-hover: #1f2637;
+            --accent-gold: #ffd700;
+            --accent-blue: #00b4d8;
+            --text-white: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 5%;
+            background: rgba(11, 14, 20, 0.8);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn {
+            color: var(--text-white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            background: var(--bg-card);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+        .back-btn:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .news-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .news-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+        }
+        .news-title { font-size: 1.05rem; font-weight: 800; color: var(--accent-blue); }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            width: 90vw;
+            max-width: 600px;
+            height: auto;
+            max-height: 80vh;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .modal-title { font-size: 1.2rem; font-weight: 800; color: var(--accent-gold); }
+        .modal-close {
+            background: none; border: none;
+            color: var(--text-muted); font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+        }
+        .contact-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            line-height: 1.8;
+            font-size: 0.92rem;
+            color: var(--text-white);
+        }
+        .news-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">
+            <i class="fa-solid fa-newspaper"></i>
+            <span>اخبار لیگ</span>
+        </div>
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>بازگشت</span>
+        </a>
+    </header>
+
+    <div class="container">
+        <div id="newsList">در حال بارگذاری...</div>
+    </div>
+
+    <div class="modal-overlay" id="newsDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="newsDetailsTitle">جزئیات خبر</div>
+                <button class="modal-close" onclick="closeModal('newsDetailsModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="newsDetailsBody"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentNewsData = [];
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        function toArray(data) {
+            if (!data) return [];
+            return Object.keys(data).map(key => ({ id: key, ...data[key] }));
+        }
+
+        async function fetchNewsData() {
+            try {
+                const response = await fetch('/api/getdata');
+                const data = await response.json();
+
+                currentNewsData = toArray(data.news);
+                renderNews(currentNewsData);
+
+                // به‌روزرسانی تعداد اخبار خوانده شده
+                localStorage.setItem('readNewsCount', currentNewsData.length);
+            } catch (err) {
+                console.error("خطا در دریافت اطلاعات:", err);
+            }
+        }
+
+        function renderNews(news) {
+            const container = document.getElementById('newsList');
+            if (news.length === 0) { container.innerHTML = '<p style="text-align:center;">خبری یافت نشد.</p>'; return; }
+
+            container.innerHTML = news.map(n => `
+                <div class="news-card" onclick="openNewsDetails('${n.id}')">
+                    <div class="news-title">${n.title || 'بدون عنوان'}</div>
+                    <i class="fa-solid fa-chevron-left" style="color: var(--text-muted); font-size: 0.9rem;"></i>
+                </div>
+            `).join('');
+        }
+
+        function openNewsDetails(newsId) {
+            const newsItem = currentNewsData.find(n => n.id === newsId);
+            if (!newsItem) return;
+
+            document.getElementById('newsDetailsTitle').textContent = newsItem.title || 'مشاهده خبر';
+
+            const modalBody = document.getElementById('newsDetailsBody');
+            modalBody.innerHTML = `
+                <div class="contact-box">
+                    <h3 style="color: var(--accent-blue); margin-top: 0;">${newsItem.title || ''}</h3>
+                    <div class="news-desc" style="white-space: pre-line; margin-top: 10px;">${newsItem.desc || 'توضیحاتی برای این خبر ثبت نشده است.'}</div>
+                </div>
+            `;
+
+            openModal('newsDetailsModal');
+        }
+
+        fetchNewsData();
+    </script>
+</body>
+</html>
