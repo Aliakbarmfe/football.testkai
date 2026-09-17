@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خرید گل | لیگ مجازی کلاسیک</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #0b0e14;
+            --bg-card: #161b26;
+            --bg-card-hover: #1f2637;
+            --primary-green: #00ff87;
+            --accent-gold: #ffd700;
+            --text-white: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 5%;
+            background: rgba(11, 14, 20, 0.8);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn {
+            color: var(--text-white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            background: var(--bg-card);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+        .back-btn:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .products-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .product-card:hover { transform: translateY(-2px); border-color: var(--accent-gold); }
+        .product-name { font-weight: 800; font-size: 1rem; }
+        .product-price { color: var(--primary-green); font-weight: 700; font-size: 0.95rem; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            width: 90vw;
+            max-width: 500px;
+            height: auto;
+            max-height: 80vh;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .modal-title { font-size: 1.2rem; font-weight: 800; color: var(--accent-gold); }
+        .modal-close {
+            background: none; border: none;
+            color: var(--text-muted); font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .product-details-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+        .product-details-name {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--text-white);
+            margin-bottom: 10px;
+        }
+        .product-details-price {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--primary-green);
+            background: rgba(0, 255, 135, 0.1);
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+        .product-details-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            text-align: justify;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">
+            <i class="fa-solid fa-futbol"></i>
+            <span>تعرفه رسمی خرید گل</span>
+        </div>
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>بازگشت</span>
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="products-list" id="productsList">در حال بارگذاری...</div>
+    </div>
+
+    <div class="modal-overlay" id="productDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">اطلاعات محصول</div>
+                <button class="modal-close" onclick="closeModal('productDetailsModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="productDetailsBody"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentProductsData = [];
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        function toArray(data) {
+            if (!data) return [];
+            return Object.keys(data).map(key => ({ id: key, ...data[key] }));
+        }
+
+        async function fetchProductsData() {
+            try {
+                const response = await fetch('/api/getdata');
+                const data = await response.json();
+
+                currentProductsData = toArray(data.products);
+                renderProducts(currentProductsData);
+            } catch (err) {
+                console.error("خطا در دریافت اطلاعات:", err);
+            }
+        }
+
+        function renderProducts(products) {
+            const container = document.getElementById('productsList');
+            if (products.length === 0) { container.innerHTML = '<p style="text-align:center;">محصولی یافت نشد.</p>'; return; }
+
+            container.innerHTML = products.map(p => `
+                <div class="product-card" onclick="openProductDetails('${p.id}')">
+                    <div class="product-name">${p.name || 'محصول'}</div>
+                    <div class="product-price">${p.price || 0}</div>
+                </div>
+            `).join('');
+        }
+
+        function openProductDetails(productId) {
+            const product = currentProductsData.find(p => p.id === productId);
+            if (!product) return;
+
+            const modalBody = document.getElementById('productDetailsBody');
+            const descText = product.desc || 'توضیحاتی برای این محصول ثبت نشده است.';
+
+            modalBody.innerHTML = `
+                <div class="product-details-card">
+                    <div class="product-details-name">${product.name || 'محصول'}</div>
+                    <div class="product-details-price">${product.price || 0}</div>
+                    <div class="product-details-desc" id="productDescText">${descText}</div>
+                </div>
+            `;
+
+            const descElement = document.getElementById('productDescText');
+            descElement.onclick = function() {
+                const phoneRegex = /(?:\+?98|0)?9\d{9}/g;
+                const idRegex = /@[a-zA-Z0-9_]{3,}|[a-zA-Z0-9_]{3,}@/g;
+
+                const phones = descText.match(phoneRegex) || [];
+                const ids = descText.match(idRegex) || [];
+
+                const hasPhone = phones.length > 0;
+                const hasId = ids.length > 0;
+
+                const copyToClipboard = (text, label) => {
+                    navigator.clipboard.writeText(text).then(() => {
+                        alert(`${label} با موفقیت کپی شد: ${text}`);
+                    }).catch(err => {
+                        console.error('خطا در کپی:', err);
+                    });
+                };
+
+                if (hasPhone && hasId) {
+                    const choice = prompt(`کدام مورد کپی شود؟\n1: آیدی (${ids[0]})\n2: شماره تلفن (${phones[0]})\nعدد 1 یا 2 را وارد کنید:`);
+                    if (choice === '1') {
+                        copyToClipboard(ids[0], 'آیدی');
+                    } else if (choice === '2') {
+                        copyToClipboard(phones[0], 'شماره تلفن');
+                    }
+                } else if (hasId) {
+                    copyToClipboard(ids[0], 'آیدی');
+                } else if (hasPhone) {
+                    copyToClipboard(phones[0], 'شماره تلفن');
+                }
+            };
+
+            openModal('productDetailsModal');
+        }
+
+        fetchProductsData();
+    </script>
+</body>
+</html>
