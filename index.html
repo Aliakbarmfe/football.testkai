@@ -414,95 +414,6 @@
             font-size: 1.05rem;
         }
 
-        .games-topic-banner {
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--primary-green);
-            padding: 12px;
-            background: rgba(0, 255, 135, 0.05);
-            border-radius: 10px;
-            margin-bottom: 15px;
-            border: 1px dashed rgba(0, 255, 135, 0.3);
-        }
-
-        .popup-game-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 12px;
-        }
-        .popup-game-team {
-            font-weight: 700;
-            font-size: 1rem;
-            width: 45%;
-        }
-        .popup-game-team.left {
-            text-align: left;
-        }
-        .popup-game-vs {
-            color: var(--accent-gold);
-            font-weight: 900;
-            font-size: 0.9rem;
-        }
-
-        .products-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .product-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 20px;
-            cursor: pointer;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-        .product-card:hover { transform: translateY(-2px); border-color: var(--accent-gold); }
-        .product-name { font-weight: 800; font-size: 1rem; }
-        .product-price { color: var(--primary-green); font-weight: 700; font-size: 0.95rem; }
-
-        .product-details-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-        }
-        .product-details-name {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--text-white);
-            margin-bottom: 10px;
-        }
-        .product-details-price {
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: var(--primary-green);
-            background: rgba(0, 255, 135, 0.1);
-            display: inline-block;
-            padding: 6px 20px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-        }
-        .product-details-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            text-align: justify;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-            cursor: pointer;
-        }
-
         .honor-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -537,25 +448,6 @@
         
         .medals-container { display: flex; gap: 15px; }
         .medal-item { display: flex; align-items: center; gap: 4px; font-weight: 700; }
-
-        .news-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: transform 0.2s, border-color 0.2s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .news-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent-blue);
-        }
-        .news-title { font-size: 1.05rem; font-weight: 800; color: var(--accent-blue); }
-        .news-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
 
         @media (max-width: 768px) {
             .team-stats { gap: 10px; }
@@ -616,21 +508,22 @@
         با عشق برای پیشرفت و ماندگاری لیگ مجازی کلاسیک ❤️⚽️
     </footer>
 
-    <button class="floating-btn btn-buy-goal" onclick="openModal('productsModal')">
+    <!-- دکمه‌ها برای هدایت مستقیم به صفحات جدید تنظیم شدند -->
+    <a href="gol.html" class="floating-btn btn-buy-goal">
         <i class="fa-solid fa-futbol" style="font-size: 1.2rem;"></i>
         <span>خرید گل</span>
-    </button>
+    </a>
 
-    <button class="floating-btn btn-games" onclick="openModal('gamesModal')">
+    <a href="bazi.html" class="floating-btn btn-games">
         <i class="fa-solid fa-gamepad" style="font-size: 1.1rem;"></i>
         <span>برنامه بازی ها</span>
-    </button>
+    </a>
 
-    <button class="floating-btn btn-news" onclick="openNewsModal()">
+    <a href="akhbar.html" class="floating-btn btn-news">
         <i class="fa-solid fa-newspaper" style="font-size: 1.1rem;"></i>
         <span>اخبار لیگ</span>
         <span class="news-badge" id="newsBadge" style="display: none;">0</span>
-    </button>
+    </a>
 
     <div class="modal-overlay" id="contactModal">
         <div class="modal-content modal-small">
@@ -658,19 +551,6 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="gamesModal">
-        <div class="modal-content modal-large">
-            <div class="modal-header">
-                <div class="modal-title">برنامه بازی‌ها</div>
-                <button class="modal-close" onclick="closeModal('gamesModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="gamesTopicContainer" class="games-topic-banner">در حال بارگذاری موضوع...</div>
-                <div id="gamesList">در حال بارگذاری...</div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal-overlay" id="matchDetailsModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -678,7 +558,7 @@
                 <button class="modal-close" onclick="closeModal('matchDetailsModal')">&times;</button>
             </div>
             <div class="modal-body" id="matchDetailsBody">
-                </div>
+            </div>
         </div>
     </div>
 
@@ -703,65 +583,13 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="productsModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">🚨 تعرفه رسمی خرید گل | لیگ مجازی کلاسیک ⚽</div>
-                <button class="modal-close" onclick="closeModal('productsModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="products-list" id="productsList">در حال بارگذاری...</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="productDetailsModal">
-        <div class="modal-content modal-small">
-            <div class="modal-header">
-                <div class="modal-title">اطلاعات محصول</div>
-                <button class="modal-close" onclick="closeModal('productDetailsModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="productDetailsBody">
-                </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="newsModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">اخبار لیگ</div>
-                <button class="modal-close" onclick="closeModal('newsModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="newsList">در حال بارگذاری...</div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="newsDetailsModal">
-        <div class="modal-content modal-small">
-            <div class="modal-header">
-                <div class="modal-title" id="newsDetailsTitle">جزئیات خبر</div>
-                <button class="modal-close" onclick="closeModal('newsDetailsModal')">&times;</button>
-            </div>
-            <div class="modal-body" id="newsDetailsBody">
-            </div>
-        </div>
-    </div>
-
     <script>
         let currentMatchesData = [];
-        let currentProductsData = [];
         let currentTeamsData = [];
-        let currentNewsData = [];
         let totalNewsCount = 0;
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-        function openNewsModal() {
-            openModal('newsModal');
-            localStorage.setItem('readNewsCount', totalNewsCount);
-            updateNewsBadge(totalNewsCount);
-        }
 
         function updateNewsBadge(total) {
             const readCount = parseInt(localStorage.getItem('readNewsCount') || '0', 10);
@@ -787,18 +615,16 @@
                 const data = await response.json();
 
                 currentMatchesData = toArray(data.matches);
-                currentProductsData = toArray(data.products);
                 currentTeamsData = toArray(data.teams);
-                currentNewsData = toArray(data.news);
+                
+                const newsArray = toArray(data.news);
+                totalNewsCount = newsArray.length;
+                updateNewsBadge(totalNewsCount);
 
                 renderTeams(currentTeamsData);
                 renderMatches(currentMatchesData);
                 renderTopScorers(toArray(data.topScorers));
                 renderHonors(toArray(data.honors));
-                renderProducts(currentProductsData);
-                renderNews(currentNewsData);
-                renderGamesTopic(data.gamesTopic);
-                renderGames(toArray(data.games));
             } catch (err) {
                 console.error("خطا در دریافت اطلاعات:", err);
             }
@@ -810,30 +636,6 @@
             } catch (err) {
                 console.error("خطا در به‌روزرسانی بازدید:", err);
             }
-        }
-
-        function renderGamesTopic(topicData) {
-            const container = document.getElementById('gamesTopicContainer');
-            if (!topicData) {
-                container.style.display = 'none';
-                return;
-            }
-            container.style.display = 'block';
-            let topicText = typeof topicData === 'object' ? (topicData.title || topicData.text || JSON.stringify(topicData)) : topicData;
-            container.textContent = topicText;
-        }
-
-        function renderGames(games) {
-            const container = document.getElementById('gamesList');
-            if (games.length === 0) { container.innerHTML = '<p>بازی ثبت نشده است.</p>'; return; }
-
-            container.innerHTML = games.map(g => `
-                <div class="popup-game-row">
-                    <div class="popup-game-team">${g.team1 || 'تیم ۱'}</div>
-                    <div class="popup-game-vs">VS</div>
-                    <div class="popup-game-team left">${g.team2 || 'تیم ۲'}</div>
-                </div>
-            `).join('');
         }
 
         function renderTeams(teams) {
@@ -929,52 +731,6 @@
             `).join('');
         }
 
-        function openMatchDetails(matchId) {
-            const match = currentMatchesData.find(m => m.id === matchId);
-            if (!match) return;
-
-            const players1List = Array.isArray(match.players1) 
-                ? match.players1.map(p => `<li>${p}</li>`).join('') 
-                : (match.players1 ? `<li>${match.players1}</li>` : '<li style="color:var(--text-muted)">بازیکنی ثبت نشده</li>');
-
-            const players2List = Array.isArray(match.players2) 
-                ? match.players2.map(p => `<li>${p}</li>`).join('') 
-                : (match.players2 ? `<li>${match.players2}</li>` : '<li style="color:var(--text-muted)">بازیکنی ثبت نشده</li>');
-
-            const modalBody = document.getElementById('matchDetailsBody');
-            modalBody.innerHTML = `
-                <div class="match-details-header">
-                    <div class="match-details-team-title">${match.team1 || 'تیم اول'}</div>
-                    <div class="match-details-score">${match.goals1 || 0} - ${match.goals2 || 0}</div>
-                    <div class="match-details-team-title">${match.team2 || 'تیم دوم'}</div>
-                </div>
-
-                <div class="match-details-grid">
-                    <div class="match-details-box">
-                        <div class="match-details-box-title">اطلاعات ${match.team1 || 'تیم اول'}</div>
-                        <div class="match-info-item">مربی: <span>${match.coach1 || '-'}</span></div>
-                        <div class="match-info-item">رسانه: <span>${match.media1 || '-'}</span></div>
-                        <div class="match-info-item" style="margin-top: 15px; font-weight:800; color:var(--text-white);">بازیکنان:</div>
-                        <ul class="players-list">
-                            ${players1List}
-                        </ul>
-                    </div>
-
-                    <div class="match-details-box">
-                        <div class="match-details-box-title">اطلاعات ${match.team2 || 'تیم دوم'}</div>
-                        <div class="match-info-item">مربی: <span>${match.coach2 || '-'}</span></div>
-                        <div class="match-info-item">رسانه: <span>${match.media2 || '-'}</span></div>
-                        <div class="match-info-item" style="margin-top: 15px; font-weight:800; color:var(--text-white);">بازیکنان:</div>
-                        <ul class="players-list">
-                            ${players2List}
-                        </ul>
-                    </div>
-                </div>
-            `;
-
-            openModal('matchDetailsModal');
-        }
-
         function renderTopScorers(scorers) {
             const container = document.getElementById('topScorersContainer');
             if (scorers.length === 0) { container.innerHTML = '<p>اطلاعات آقای گل موجود نیست.</p>'; return; }
@@ -1043,101 +799,6 @@
                     </div>
                 `;
             }).join('');
-        }
-
-        function renderProducts(products) {
-            const container = document.getElementById('productsList');
-            if (products.length === 0) { container.innerHTML = '<p>محصولی یافت نشد.</p>'; return; }
-
-            container.innerHTML = products.map(p => `
-                <div class="product-card" onclick="openProductDetails('${p.id}')">
-                    <div class="product-name">${p.name || 'محصول'}</div>
-                    <div class="product-price">${p.price || 0}</div>
-                </div>
-            `).join('');
-        }
-
-        function openProductDetails(productId) {
-            const product = currentProductsData.find(p => p.id === productId);
-            if (!product) return;
-
-            const modalBody = document.getElementById('productDetailsBody');
-            const descText = product.desc || 'توضیحاتی برای این محصول ثبت نشده است.';
-
-            modalBody.innerHTML = `
-                <div class="product-details-card">
-                    <div class="product-details-name">${product.name || 'محصول'}</div>
-                    <div class="product-details-price">${product.price || 0}</div>
-                    <div class="product-details-desc" id="productDescText">${descText}</div>
-                </div>
-            `;
-
-            const descElement = document.getElementById('productDescText');
-            descElement.onclick = function() {
-                const phoneRegex = /(?:\+?98|0)?9\d{9}/g;
-                const idRegex = /@[a-zA-Z0-9_]{3,}|[a-zA-Z0-9_]{3,}@/g;
-
-                const phones = descText.match(phoneRegex) || [];
-                const ids = descText.match(idRegex) || [];
-
-                const hasPhone = phones.length > 0;
-                const hasId = ids.length > 0;
-
-                const copyToClipboard = (text, label) => {
-                    navigator.clipboard.writeText(text).then(() => {
-                        alert(`${label} با موفقیت کپی شد: ${text}`);
-                    }).catch(err => {
-                        console.error('خطا در کپی:', err);
-                    });
-                };
-
-                if (hasPhone && hasId) {
-                    const choice = prompt(`کدام مورد کپی شود؟\n1: آیدی (${ids[0]})\n2: شماره تلفن (${phones[0]})\nعدد 1 یا 2 را وارد کنید:`);
-                    if (choice === '1') {
-                        copyToClipboard(ids[0], 'آیدی');
-                    } else if (choice === '2') {
-                        copyToClipboard(phones[0], 'شماره تلفن');
-                    }
-                } else if (hasId) {
-                    copyToClipboard(ids[0], 'آیدی');
-                } else if (hasPhone) {
-                    copyToClipboard(phones[0], 'شماره تلفن');
-                }
-            };
-
-            openModal('productDetailsModal');
-        }
-
-        function renderNews(news) {
-            totalNewsCount = news.length;
-            updateNewsBadge(totalNewsCount);
-
-            const container = document.getElementById('newsList');
-            if (news.length === 0) { container.innerHTML = '<p>خبری یافت نشد.</p>'; return; }
-
-            container.innerHTML = news.map(n => `
-                <div class="news-card" onclick="openNewsDetails('${n.id}')">
-                    <div class="news-title">${n.title || 'بدون عنوان'}</div>
-                    <i class="fa-solid fa-chevron-left" style="color: var(--text-muted); font-size: 0.9rem;"></i>
-                </div>
-            `).join('');
-        }
-
-        function openNewsDetails(newsId) {
-            const newsItem = currentNewsData.find(n => n.id === newsId);
-            if (!newsItem) return;
-
-            document.getElementById('newsDetailsTitle').textContent = newsItem.title || 'مشاهده خبر';
-
-            const modalBody = document.getElementById('newsDetailsBody');
-            modalBody.innerHTML = `
-                <div class="contact-box" style="margin-top: 5px;">
-                    <h3 style="color: var(--accent-blue); margin-top: 0;">${newsItem.title || ''}</h3>
-                    <div class="news-desc" style="white-space: pre-line;">${newsItem.desc || 'توضیحاتی برای این خبر ثبت نشده است.'}</div>
-                </div>
-            `;
-
-            openModal('newsDetailsModal');
         }
 
         fetchAppData();
