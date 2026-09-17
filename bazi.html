@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامه بازی‌ها | لیگ مجازی کلاسیک</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #0b0e14;
+            --bg-card: #161b26;
+            --bg-card-hover: #1f2637;
+            --primary-green: #00ff87;
+            --accent-gold: #ffd700;
+            --text-white: #ffffff;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-white);
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 5%;
+            background: rgba(11, 14, 20, 0.8);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn {
+            color: var(--text-white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            background: var(--bg-card);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+        .back-btn:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .games-topic-banner {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            padding: 15px;
+            background: rgba(0, 255, 135, 0.05);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px dashed rgba(0, 255, 135, 0.3);
+        }
+
+        .popup-game-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+        }
+
+        .popup-game-team {
+            font-weight: 700;
+            font-size: 1rem;
+            width: 45%;
+        }
+
+        .popup-game-team.left {
+            text-align: left;
+        }
+
+        .popup-game-vs {
+            color: var(--accent-gold);
+            font-weight: 900;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>برنامه بازی‌ها</span>
+        </div>
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>بازگشت</span>
+        </a>
+    </header>
+
+    <div class="container">
+        <div id="gamesTopicContainer" class="games-topic-banner">در حال بارگذاری موضوع...</div>
+        <div id="gamesList">در حال بارگذاری...</div>
+    </div>
+
+    <script>
+        function toArray(data) {
+            if (!data) return [];
+            return Object.keys(data).map(key => ({ id: key, ...data[key] }));
+        }
+
+        async function fetchGamesData() {
+            try {
+                const response = await fetch('/api/getdata');
+                const data = await response.json();
+
+                renderGamesTopic(data.gamesTopic);
+                renderGames(toArray(data.games));
+            } catch (err) {
+                console.error("خطا در دریافت اطلاعات:", err);
+            }
+        }
+
+        function renderGamesTopic(topicData) {
+            const container = document.getElementById('gamesTopicContainer');
+            if (!topicData) {
+                container.style.display = 'none';
+                return;
+            }
+            container.style.display = 'block';
+            let topicText = typeof topicData === 'object' ? (topicData.title || topicData.text || JSON.stringify(topicData)) : topicData;
+            container.textContent = topicText;
+        }
+
+        function renderGames(games) {
+            const container = document.getElementById('gamesList');
+            if (games.length === 0) { container.innerHTML = '<p style="text-align:center;">بازی ثبت نشده است.</p>'; return; }
+
+            container.innerHTML = games.map(g => `
+                <div class="popup-game-row">
+                    <div class="popup-game-team">${g.team1 || 'تیم ۱'}</div>
+                    <div class="popup-game-vs">VS</div>
+                    <div class="popup-game-team left">${g.team2 || 'تیم ۲'}</div>
+                </div>
+            `).join('');
+        }
+
+        fetchGamesData();
+    </script>
+</body>
+</html>
